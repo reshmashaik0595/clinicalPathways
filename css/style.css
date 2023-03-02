@@ -1,10 +1,10 @@
 /********** Template CSS **********/
 
 :root {
-  --primary: #06a3da;
+  --primary: #34b9c3;
   --secondary: #34ad54;
   --light: #eef9ff;
-  --dark: #091e3e;
+  --dark: #34b9c3;
 }
 
 /*** Spinner ***/
@@ -393,6 +393,11 @@ h6,
   background: var(--primary);
 }
 
+.btn-primary{
+  background-color: var(--primary);
+  border: var(--primary);
+}
+
 .testimonial-carousel .owl-item.center {
   position: relative;
   z-index: 1;
@@ -527,7 +532,7 @@ h6,
 }
 
 .tiles {
-  background-color: #06a3da !important;
+  background-color: #34b9c3 !important;
 }
 
 h5,
@@ -542,7 +547,7 @@ h5,
 }
 
 .bi {
-  color:  #06a3da !important;
+  color:  #34b9c3 !important;
   font-size: 16px !important;
   margin-right: 1% !important;
 }
