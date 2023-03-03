@@ -69,6 +69,7 @@ export class DashboardComponent {
 
           setTimeout(() => {
             $('#loginModal').modal('hide');
+            this.loginForm.reset()
             this.router.navigate(['/inner-dashboard']);
             this.spinnerService.hide();
           }, 1500);
@@ -112,6 +113,7 @@ export class DashboardComponent {
 
           setTimeout(() => {
             $('#signUpModal').modal('hide');
+            this.signUpForm.reset();
             this.spinnerService.hide();
           }, 1500);
         },
