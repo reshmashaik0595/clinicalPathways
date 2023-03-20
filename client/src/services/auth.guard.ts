@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (localStorage.getItem('isAuthenticated') == 'true') return true;
+    if (sessionStorage.getItem('isAuthenticated') == 'true') return true;
     else {
       this.router.navigate(['/']);
       return false;

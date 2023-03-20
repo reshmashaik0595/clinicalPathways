@@ -16,7 +16,7 @@ export class SidebarComponent {
   ) {}
 
   currentPage: string = '';
-  isAdmin = localStorage.getItem('isAdmin');
+  isAdmin = sessionStorage.getItem('isAdmin');
   fullName: string = '';
   
 
@@ -33,14 +33,14 @@ export class SidebarComponent {
   //Logout
   logout() {
     this.router.navigate([`/`]);
-    localStorage.setItem('isAuthenticated', 'false');
+    sessionStorage.setItem('isAuthenticated', 'false');
   }
 
   getUserByQuery() {
     this.spinnerService.show();
     try {
       this.userService
-        .getUserbyQuery(`_id=${localStorage.getItem('userId')}`)
+        .getUserbyQuery(`_id=${sessionStorage.getItem('userId')}`)
         .subscribe(
           (response: any) => {
             console.log(`User Data: ${JSON.stringify(response)}`);

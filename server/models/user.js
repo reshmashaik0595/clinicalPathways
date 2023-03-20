@@ -2,11 +2,27 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10
 
+const emailPattern = function (email) {
+    const regex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+    return regex.test(email)
+}
+
+const mobilePattern = function (mobile) {
+    const regex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+    return regex.test(mobile)
+}
+
+// const passwordPattern = function (password) {
+//     const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
+//     return regex.test(password)
+// }
+
 // User schema
 const UserSchema = mongoose.Schema({
     userName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     firstName: {
         type: String,
@@ -18,15 +34,33 @@ const UserSchema = mongoose.Schema({
     },
     emailId: {
         type: String,
-        required: true
-    },
-    mobile: {
-        type: String,
-        required: true
+        required: true,
+        unique: true,
+        validate: emailPattern
     },
     password: {
         type: String,
         required: true
+    },
+    mobile: {
+        type: String,
+        required: true,
+        validate: mobilePattern
+    },
+    designation: {
+        type: String,
+        required: true,
+        enum: ['Doctor', 'Nurse Practioner', 'Admin'],
+    },
+    govtIDNumber: {
+        type: String,
+        required: true
+    },
+    approvalStatus: {
+        type: String,
+        required: true,
+        enum: ['APPROVED', 'REJECTED', 'PENDING'],
+        default: 'PENDING'
     },
     createdAt: {
         type: Date,
@@ -77,9 +111,29 @@ UserSchema.pre('save', function (next) {
 
 
 // Compare the password and return 'true' if matches
-UserSchema.methods.comparePassword = async (enteredPassword, actualpassword) => {
-    const isMatch = await bcrypt.compare(enteredPassword, actualpassword)
+UserSchema.methods.comparePassword = async (enteredPassword, actualPassword) => {
+    console.log(enteredPassword + " .. " + actualPassword)
+    const isMatch = await bcrypt.compare(enteredPassword, actualPassword)
     return !!(isMatch)
 }
+
+// Convert to hash password, and udpate the updateddate before updating to db
+UserSchema.pre('updateMany', function (next) {
+    const user = this.getUpdate()
+    // UpdatedAt
+    user.updatedAt = new Date()
+    if (user.password) { // If password exists
+        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+            if (err) return next(err)
+            // hash the password using our new salt
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                if (err) return next(err)
+                // Override the cleartext password with the hashed one
+                user.password = hash
+                next()
+            })
+        })
+    } else next()
+})
 
 module.exports = mongoose.model('User', UserSchema)

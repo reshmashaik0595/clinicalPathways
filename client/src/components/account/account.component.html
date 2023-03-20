@@ -127,17 +127,13 @@
                           >Mobile must meet validation criteria.
                         </span>
                       </div>
-                      <div
-                        class="alert alert-success"
-                        *ngIf="!onLoadOnUpdateUser && successOnUpdateUser"
-                      >
-                        <span>{{ alertHeadingOnUpdateUser }}! {{ successMessageOnUpdateUser }}</span>
-                      </div>
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="!onLoadOnUpdateUser && !successOnUpdateUser"
-                      >
-                        <span>{{ alertHeadingOnUpdateUser }}! {{ errorMessageOnUpdateUser }}</span>
+                      <div [ngClass]="className" *ngIf="!onComponentLoad">
+                        <span
+                          >{{ header ? header : "Error" }}!
+                          {{
+                            message ? message : "Internal Server Error"
+                          }}.</span
+                        >
                       </div>
                       <div class="col-12">
                         <button

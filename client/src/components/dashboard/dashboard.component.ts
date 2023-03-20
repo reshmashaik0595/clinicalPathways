@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
 declare var $: any;
 import { NgxLoaderSpinnerService } from 'ngx-loader-spinner';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,9 +18,13 @@ export class DashboardComponent {
     private userService: UserService
   ) {}
 
+  isForgetPassword: boolean = false;
+  userId: any = '';
+
   loginForm = new FormGroup({
     userName: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
+    confirmPassword: new FormControl(null),
   });
 
   signUpForm = new FormGroup({
@@ -27,64 +32,64 @@ export class DashboardComponent {
     lastName: new FormControl(null, [Validators.required]),
     mobile: new FormControl(null, [Validators.required]),
     emailId: new FormControl(null, [Validators.required]),
+    designation: new FormControl(null, [Validators.required]),
+    govtIDNumber: new FormControl(null, [Validators.required]),
     userName: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
     confirmPassword: new FormControl(null, [Validators.required]),
   });
 
-  errorMessage: string = '';
-  successMessage: string = '';
-  alertHeading: string = '';
-  success: boolean = false;
+  className: string = '';
+  message: any = null;
+  header: any = null;
+  onComponentLoad: boolean = true;
 
-  errorMessageOnsignUp: string = '';
-  successMessageOnsignUp: string = '';
-  alertHeadingOnsignUp: string = '';
-  successOnsignUp: boolean = false;
-
-  onLoad: boolean = true;
-  onLoadOnsignUp: boolean = true;
-
-  isLoggedIn = localStorage.getItem('isAuthenticated') == 'true' ? true : false;
+  isLoggedIn =
+    sessionStorage.getItem('isAuthenticated') == 'true' ? true : false;
 
   ngOnInit(): void {}
 
   // login
   login() {
-    this.onLoad = false;
     try {
       this.spinnerService.show();
       this.userService.login(this.loginForm.value).subscribe(
         (response: any) => {
-          this.success = true;
-          this.alertHeading = response.message;
+          this.onComponentLoad = false;
+          this.className = 'alert alert-success';
+          this.header = 'Success';
+          this.message = response.message;
 
           setTimeout(() => {
-            this.errorMessage = '';
-            this.successMessage = '';
-            this.alertHeading = '';
-            this.success = false;
-            this.onLoad = true;
-          }, 3000);
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+          }, 1500);
 
           setTimeout(() => {
             $('#loginModal').modal('hide');
-            this.loginForm.reset()
+            this.loginForm.reset();
             this.router.navigate(['/inner-dashboard']);
-            this.spinnerService.hide();
           }, 1500);
+
+          this.spinnerService.hide();
         },
         (err: any) => {
           console.error(`Error [login]:  , ${JSON.stringify(err.error)}`);
-          this.alertHeading = err.error.message;
-          this.errorMessage = err.error.body;
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
           this.spinnerService.hide();
         }
       );
     } catch (err: any) {
       console.error(`Error [login]:  , ${JSON.stringify(err)}`);
-      this.alertHeading = err.error.message;
-      this.errorMessage = err.error.body;
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
       this.spinnerService.hide();
     }
   }
@@ -95,40 +100,127 @@ export class DashboardComponent {
 
   // Signup and create a user
   saveUser() {
-    this.onLoadOnsignUp = false;
     this.spinnerService.show();
     try {
       this.userService.saveUser([this.signUpForm.value]).subscribe(
         (response: any) => {
-          this.successOnsignUp = true;
-          this.alertHeadingOnsignUp = response.message;
+          this.onComponentLoad = false;
+          this.className = 'alert alert-success';
+          this.header = 'Success';
+          this.message = response.message;
 
           setTimeout(() => {
-            this.errorMessageOnsignUp = '';
-            this.successMessageOnsignUp = '';
-            this.alertHeadingOnsignUp = '';
-            this.successOnsignUp = false;
-            this.onLoadOnsignUp = true;
-          }, 3000);
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+          }, 1500);
 
           setTimeout(() => {
             $('#signUpModal').modal('hide');
             this.signUpForm.reset();
-            this.spinnerService.hide();
           }, 1500);
+
+          this.spinnerService.hide();
+
+          swal.fire({
+            text: response.emailSent
+              ? 'Email has been sent to admin for further approval. Thank You!'
+              : 'Email failed to send for approval. Please contact administrator for more details.',
+            icon: response.emailSent ? 'success' : 'error',
+            showConfirmButton: false,
+            timer: 4500,
+          });
         },
         (err: any) => {
           console.error(`Error [saveUser]:  , ${JSON.stringify(err.error)}`);
-          this.alertHeadingOnsignUp = err.error.message;
-          this.errorMessageOnsignUp = err.error.body;
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
           this.spinnerService.hide();
         }
       );
     } catch (err: any) {
       console.error(`Error [saveUser]:  , ${JSON.stringify(err)}`);
-      this.alertHeadingOnsignUp = err.error.message;
-      this.errorMessageOnsignUp = err.error.body;
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
       this.spinnerService.hide();
     }
+  }
+
+  onForgetPasswordSelection() {
+    this.className = '';
+    this.onComponentLoad = true;
+    this.header = null;
+    this.message = null;
+    this.loginForm.reset();
+    this.isForgetPassword = true;
+    this.loginForm.get('confirmPassword')?.setValidators([Validators.required]);
+    this.loginForm.updateValueAndValidity();
+  }
+
+  onBackToLoginSelection() {
+    this.className = '';
+    this.onComponentLoad = true;
+    this.header = null;
+    this.message = null;
+    this.loginForm.reset();
+    this.isForgetPassword = false;
+    this.loginForm.get('confirmPassword')?.clearValidators();
+    this.loginForm.get('confirmPassword')?.updateValueAndValidity();
+  }
+
+  forgetPassword() {
+    try {
+      this.spinnerService.show();
+      const query = `userName=${this.loginForm.get('userName')?.value}`;
+      this.userService.forgetPassword(query, this.loginForm.value).subscribe(
+        (response: any) => {
+          this.onComponentLoad = false;
+          this.className = 'alert alert-success';
+          this.header = 'Success';
+          this.message = 'Password reset successful';
+
+          setTimeout(() => {
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+            this.loginForm.reset();
+            this.isForgetPassword = false;
+            this.loginForm.get('confirmPassword')?.clearValidators();
+            this.loginForm.get('confirmPassword')?.updateValueAndValidity();
+          }, 3000);
+
+          this.spinnerService.hide();
+        },
+        (err: any) => {
+          console.error(
+            `Error [Forget-Password]:  , ${JSON.stringify(err.error)}`
+          );
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
+          this.spinnerService.hide();
+        }
+      );
+    } catch (err: any) {
+      console.error(`Error [Forget-Password]:  , ${JSON.stringify(err)}`);
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
+      this.spinnerService.hide();
+    }
+  }
+
+  resetModal() {
+    this.isForgetPassword = false;
+    this.loginForm.reset();
+    this.signUpForm.reset();
   }
 }

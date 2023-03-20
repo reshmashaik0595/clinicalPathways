@@ -46,7 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxLoaderSpinnerModule,
+    NgxLoaderSpinnerModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

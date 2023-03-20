@@ -608,10 +608,19 @@ a {
   margin-left: 2% !important;
 }
 
-.loader > div{
+.loader > div {
   background-color: #34b9c3 !important;
 }
 
-.mb-4{
+.mb-4 {
   margin-right: 5% !important;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: #34b9c3 !important;
+  border-color: #34b9c3 !important;
+}
+
+.bi-person-check-fill, .bi-x-square-fill{
+  cursor: pointer !important;
 }

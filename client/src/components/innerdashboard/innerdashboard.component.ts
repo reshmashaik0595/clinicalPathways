@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class InnerdashboardComponent {
   constructor(private router: Router) {}
   ngOnInit(): void {
-    if (localStorage.getItem('isAdmin') == 'true')
+    if (sessionStorage.getItem('isAdmin') == 'true')
       this.router.navigate(['/admin-dashboard']);
     else this.router.navigate(['/user-dashboard']);
   }

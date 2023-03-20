@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class TopbarComponent {
   constructor(private router: Router) {}
   id: string = 'home';
-  isLoggedIn = localStorage.getItem('isAuthenticated') == 'true' ? true : false;
+  isLoggedIn = sessionStorage.getItem('isAuthenticated') == 'true' ? true : false;
 
   ngOnInit() {}
 
@@ -19,6 +19,6 @@ export class TopbarComponent {
 
   logout() {
     location.reload()
-    localStorage.setItem('isAuthenticated', 'false');
+    sessionStorage.setItem('isAuthenticated', 'false');
   }
 }

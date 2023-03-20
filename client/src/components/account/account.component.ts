@@ -24,11 +24,10 @@ export class AccountComponent {
     emailId: new FormControl(null, [Validators.required]),
   });
 
-  errorMessageOnUpdateUser: string = '';
-  successMessageOnUpdateUser: string = '';
-  alertHeadingOnUpdateUser: string = '';
-  successOnUpdateUser: boolean = false;
-  onLoadOnUpdateUser: boolean = true;
+  className: string = '';
+  header: any = null;
+  message: any = null;
+  onComponentLoad: boolean = true;
 
   ngOnInit() {
     this.getUserByQuery();
@@ -38,7 +37,7 @@ export class AccountComponent {
     this.spinnerService.show();
     try {
       this.userService
-        .getUserbyQuery(`_id=${localStorage.getItem('userId')}`)
+        .getUserbyQuery(`_id=${sessionStorage.getItem('userId')}`)
         .subscribe(
           (response: any) => {
             console.log(`User Data: ${JSON.stringify(response)}`);
@@ -64,36 +63,41 @@ export class AccountComponent {
   }
 
   updateUser() {
-    this.onLoadOnUpdateUser = false;
     this.spinnerService.show();
     try {
-      this.userService.updateUser(this.accountForm.value).subscribe(
+      const query = `_id=${sessionStorage.getItem('userId')}`;
+      this.userService.updateUser(query, this.accountForm.value).subscribe(
         (response: any) => {
-          this.successOnUpdateUser = true;
-          this.alertHeadingOnUpdateUser = response.message;
-          setTimeout(() => {
-            this.spinnerService.hide();
-          }, 1500);
+          this.onComponentLoad = false;
+          this.className = 'alert alert-success';
+          this.header = 'Success';
+          this.message = response.message;
 
           setTimeout(() => {
-            this.errorMessageOnUpdateUser = '';
-            this.successMessageOnUpdateUser = '';
-            this.alertHeadingOnUpdateUser = '';
-            this.successOnUpdateUser = false;
-            this.onLoadOnUpdateUser = true;
-          }, 3000);
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+          }, 8000);
+
+          this.getUserByQuery();
+          this.spinnerService.hide();
         },
         (err: any) => {
           console.error(`Error [saveUser]:  , ${JSON.stringify(err.error)}`);
-          this.alertHeadingOnUpdateUser = err.error.message;
-          this.errorMessageOnUpdateUser = err.error.body;
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
           this.spinnerService.hide();
         }
       );
     } catch (err: any) {
       console.error(`Error [saveUser]:  , ${JSON.stringify(err)}`);
-      this.alertHeadingOnUpdateUser = err.error.message;
-      this.errorMessageOnUpdateUser = err.error.body;
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
       this.spinnerService.hide();
     }
   }

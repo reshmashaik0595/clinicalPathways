@@ -4,7 +4,7 @@ const { MESSAGE } = require('../config/constants')
 // Authenticate login user
 const login = async (req, res) => {
     try {
-        if (!req.body.userName) return res.status(400).json({ message: MESSAGE.LOGIN.FAILED, body: MESSAGE.INVALID_USER_NAME })
+        if (!req.body.userName) return res.status(400).json({ message: MESSAGE.LOGIN.FAILED, body: MESSAGE.LOGIN.INVALID_USER_NAME })
         else if (!req.body.password) return res.status(400).json({ message: MESSAGE.LOGIN.FAILED, body: MESSAGE.LOGIN.INVALID_PASSWORD })
 
         const userName = req.body.userName
@@ -12,9 +12,12 @@ const login = async (req, res) => {
 
         // Fetch the user
         const user = await userCrud.getByQuery({ userName: userName })
-        if (!user.length) return res.status(404).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.INVALID_USER_NAME}` })
+        if (!user.length) return res.status(404).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.INVALID_USER_NAME}` })
+        if (user[0].approvalStatus == 'PENDING') return res.status(403).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.APPROVAL_STATUS_PENDING}` })
+        if (user[0].approvalStatus == 'REJECT') return res.status(403).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.APPROVAL_STATUS_REJECT}` })
 
         // Matching password
+        console.log(user[0].password)
         const isMatch = await user[0].comparePassword(password, user[0].password)
         console.log(isMatch)
         if (!isMatch) return res.status(401).send({ message: MESSAGE.LOGIN.FAILED, body: MESSAGE.LOGIN.INVALID_PASSWORD })

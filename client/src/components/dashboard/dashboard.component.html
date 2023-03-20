@@ -16,12 +16,14 @@
             class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
             data-bs-toggle="modal"
             data-bs-target="#loginModal"
+            (click)="resetModal()"
             ><i class="fa fa-user"></i> Login</a
           >
           <a
             class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"
             data-bs-toggle="modal"
             data-bs-target="#signUpModal"
+            (click)="resetModal()"
           >
             Sign up</a
           >
@@ -153,6 +155,56 @@
               </span>
             </div>
             <div class="col-12">
+              <select
+                class="form-control bg-light border-0"
+                formControlName="designation"
+                style="height: 55px"
+                [ngClass]="{
+                  'input-error':
+                    (signUpForm.get('designation')?.dirty ||
+                      signUpForm.get('designation')?.touched) &&
+                    signUpForm.get('designation')?.invalid
+                }"
+              >
+                <option value=null>Select Designation *</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse Practioner">Nurse Practioner</option>
+              </select>
+              <span
+                class="text-danger"
+                *ngIf="
+                  (signUpForm.get('designation')?.dirty ||
+                    signUpForm.get('designation')?.touched) &&
+                  signUpForm.get('designation')!.invalid
+                "
+                >Designation must meet validation criteria.
+              </span>
+            </div>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control bg-light border-0"
+                placeholder="Government Identification Number *"
+                formControlName="govtIDNumber"
+                style="height: 55px"
+                [ngClass]="{
+                  'input-error':
+                    (signUpForm.get('govtIDNumber')?.dirty ||
+                      signUpForm.get('govtIDNumber')?.touched) &&
+                    signUpForm.get('govtIDNumber')?.invalid
+                }"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  (signUpForm.get('govtIDNumber')?.dirty ||
+                    signUpForm.get('govtIDNumber')?.touched) &&
+                  signUpForm.get('govtIDNumber')!.invalid
+                "
+                >Government Identification Number must meet validation criteria.
+              </span>
+            </div>
+            <div class="col-12">
               <input
                 type="text"
                 class="form-control bg-light border-0"
@@ -224,20 +276,10 @@
                 >Confirm Password must meet validation criteria.
               </span>
             </div>
-            <div
-              class="alert alert-success"
-              *ngIf="!onLoadOnsignUp && successOnsignUp"
-            >
+            <div [ngClass]="className" *ngIf="!onComponentLoad">
               <span
-                >{{ alertHeadingOnsignUp }}! {{ successMessageOnsignUp }}</span
-              >
-            </div>
-            <div
-              class="alert alert-danger"
-              *ngIf="!onLoadOnsignUp && !successOnsignUp"
-            >
-              <span
-                >{{ alertHeadingOnsignUp }}! {{ errorMessageOnsignUp }}</span
+                >{{ header ? header : "Error" }}!
+                {{ message ? message : "Internal Server Error." }}.</span
               >
             </div>
             <div class="col-12">
@@ -321,33 +363,60 @@
               </span>
             </div>
 
-            <div class="alert alert-success" *ngIf="!onLoad && success">
-              <span>{{ alertHeading }}! {{ successMessage }}</span>
+            <div class="col-12" *ngIf="isForgetPassword">
+              <input
+                type="password"
+                placeholder="Confirm Password *"
+                class="form-control bg-light border-0"
+                style="height: 55px"
+                formControlName="confirmPassword"
+                [ngClass]="{
+                  'input-error':
+                    (loginForm.get('confirmPassword')?.dirty ||
+                      loginForm.get('confirmPassword')?.touched) &&
+                    loginForm.get('confirmPassword')?.invalid
+                }"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  (loginForm.get('confirmPassword')?.dirty ||
+                    loginForm.get('confirmPassword')?.touched) &&
+                  loginForm.get('confirmPassword')!.invalid
+                "
+                >Confirm Password must meet validation criteria.
+              </span>
             </div>
-            <div class="alert alert-danger" *ngIf="!onLoad && !success">
-              <span>{{ alertHeading }}! {{ errorMessage }}</span>
+
+            <div [ngClass]="className" *ngIf="!onComponentLoad">
+              <span
+                >{{ header ? header : "Error" }}!
+                {{ message ? message : "Internal Server Error." }}.</span
+              >
             </div>
             <div class="col-12">
               <button
-                (click)="login()"
+                (click)="!isForgetPassword ? login() : forgetPassword()"
                 class="btn btn-dark w-100 py-3"
                 [disabled]="loginForm.invalid"
               >
-                Login
+                <span>
+                  {{ isForgetPassword ? "Forget Password" : "Login " }}</span
+                >
               </button>
             </div>
-            <p class="text-center" style="font-weight: bold">or:</p>
-            <div class="text-center mb-3">
-              <p>Sign in with:</p>
-
-              <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-google"></i>
-              </button>
-
-              <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-apple"></i>
-              </button>
-            </div>
+            <a
+              class="btn btn-link btn-floating mx-1"
+              *ngIf="!isForgetPassword"
+              (click)="onForgetPasswordSelection()"
+              >Forget Password <i class="fa fa-question-circle"></i
+            ></a>
+            <a
+              class="btn btn-link btn-floating mx-1"
+              *ngIf="isForgetPassword"
+              (click)="onBackToLoginSelection()"
+              >Back to login <i class="fa fa-arrow-left"></i
+            ></a>
           </div>
         </form>
         <!-- <div class="modal-footer"></div> -->
@@ -356,4 +425,5 @@
   </div>
   <ngx-loader-spinner></ngx-loader-spinner>
 </div>
+
 <!-- Full Screen Search End -->

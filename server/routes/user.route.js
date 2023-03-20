@@ -4,5 +4,5 @@ const userService = require('../services/user.service')
 
 router.post('/', userService.createUsers)
 router.get('/', userService.getByQuery)
-router.put('/:id', userService.updateUser)
+router.put('/', userService.updateUser)
 module.exports = router

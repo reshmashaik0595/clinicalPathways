@@ -21,6 +21,12 @@
                 >
                   <div class="container table-responsive py-5">
                     <h4 class="text-right">User Details</h4>
+                    <div [ngClass]="className" *ngIf="!onComponentLoad">
+                      <span
+                        >{{ header ? header : "Error" }}!
+                        {{ message ? message : "Internal Server Error" }}.</span
+                      >
+                    </div>
                     <table class="table table-bordered table-hover">
                       <thead class="thead-dark">
                         <tr>
@@ -29,24 +35,64 @@
                           <th scope="col">Last Name</th>
                           <th scope="col">Email ID</th>
                           <th scope="col">Mobile</th>
+                          <th scope="col">Designation</th>
+                          <th scope="col">Government ID Number</th>
+                          <th scope="col">Approval Status</th>
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
+                      <span *ngIf="userList.length == 0"
+                        ><b>No users found</b></span
+                      >
                       <tbody>
-                        <tr>
-                          <span *ngIf="userList.length == 0"
-                            >No data found</span
-                          >
-                        </tr>
                         <tr *ngFor="let user of userList; let i = index">
                           <th scope="row">{{ i + 1 }}</th>
                           <td>{{ user.firstName }}</td>
                           <td>{{ user.lastName }}</td>
                           <td>{{ user.emailId }}</td>
                           <td>{{ user.mobile }}</td>
+                          <td>{{ user.designation }}</td>
+                          <td>{{ user.govtIDNumber }}</td>
+                          <td
+                            [style.color]="
+                              user.approvalStatus == 'APPROVED'
+                                ? 'green'
+                                : user.approvalStatus == 'REJECTED'
+                                ? 'RED'
+                                : 'orange'
+                            "
+                          >
+                            {{ user.approvalStatus }}
+                          </td>
                           <td>
-                            <i class="bi-person-check-fill"></i>
-                            <i class="bi-x-square-fill"></i>
+                            <i
+                              *ngIf="
+                                user.approvalStatus == 'PENDING' ||
+                                user.approvalStatus == 'REJECTED'
+                              "
+                              class="bi-person-check-fill"
+                              (click)="
+                                updateUserApprovalStatus(
+                                  user._id,
+                                  'APPROVED',
+                                  user.emailId
+                                )
+                              "
+                            ></i>
+                            <i
+                              *ngIf="
+                                user.approvalStatus == 'PENDING' ||
+                                user.approvalStatus == 'APPROVED'
+                              "
+                              class="bi-x-square-fill"
+                              (click)="
+                                updateUserApprovalStatus(
+                                  user._id,
+                                  'REJECTED',
+                                  user.emailId
+                                )
+                              "
+                            ></i>
                           </td>
                         </tr>
                       </tbody>

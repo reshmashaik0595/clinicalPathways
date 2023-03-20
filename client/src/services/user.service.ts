@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { url } from '../../src/config/constants';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root',
@@ -28,23 +29,25 @@ export class UserService {
     return this.http.post(url.domainurl + `auth/login`, loginData).pipe(
       map((data: any) => {
         if (data['message'] == 'Login successful') {
-          localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem(
+          sessionStorage.setItem('isAuthenticated', 'true');
+          sessionStorage.setItem(
             'isAdmin',
             loginData.userName == 'admin' ? 'true' : 'false'
           );
-          localStorage.setItem('userId', data.user._id);
-        } else localStorage.setItem('isAuthenticated', 'false');
+          sessionStorage.setItem('userId', data.user._id);
+        } else sessionStorage.setItem('isAuthenticated', 'false');
         return data;
       })
     );
   }
 
-  updateUser(userData: any): Observable<any> {
+  updateUser(query: any, userData: any): Observable<any> {
     console.log(`userData: ${JSON.stringify(userData)}`);
-    return this.http.put(
-      url.domainurl + `users/${localStorage.getItem('userId')}`,
-      userData
-    );
+    return this.http.put(url.domainurl + `users?${query}`, userData);
+  }
+
+  forgetPassword(query: any, userData: any): Observable<any> {
+    console.log(`userData: ${JSON.stringify(userData)}`);
+    return this.http.put(url.domainurl + `users?${query}`, userData);
   }
 }
