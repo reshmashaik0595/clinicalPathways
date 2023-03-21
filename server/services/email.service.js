@@ -4,6 +4,7 @@ const { EMAIL } = require('../config/constants')
 
 // Send email
 const sendMail = async (req) => {
+  console.log(`res: ${JSON.stringify(req)}`);
   try {
     const transporter = nodemailer.createTransport({
       service: EMAIL.EMAIL_SERVICE,
@@ -17,12 +18,18 @@ const sendMail = async (req) => {
     });
 
     let data, subject
-    if (req.emailForReview) {
+    if (req.reqOnReviewApprovalStatus) {
       data = fs.readFileSync('./config/adminApprovalEmailTemplate.html', 'utf8')
       subject = 'New Request has been sent for your approval!'
-    } else {
+    } else if (req.reqOnPasswordReset) {
+      data = fs.readFileSync('./config/passwordResetEmailTemplate.html', 'utf8')
+      subject = `Your Password has been reset!`
+    } else if (req.reqOnUpdateApprovalStatus) {
       data = fs.readFileSync('./config/userApprovalStatusEmailTemplate.html', 'utf8')
       subject = `Your Request has been ${req.approvalStatus} by admin!`
+    } else {
+      console.error(`Failed to send mail!!`)
+      return { emailSent: false }
     }
 
     // console.log(`HTML data, ${data}`);
@@ -34,6 +41,7 @@ const sendMail = async (req) => {
     data = data.replaceAll('#govtIDNumber', req.govtIDNumber)
     data = data.replaceAll('#appURL', EMAIL.APPLICATION_URL)
     data = data.replaceAll('#approvalStatus', req.approvalStatus)
+    data = data.replaceAll('#resetPassword', req.password)
     // console.log(`HTML replaced data, ${data}`);
 
     const mailOptions = {

@@ -22,32 +22,90 @@ export class DashboardComponent {
   userId: any = '';
 
   loginForm = new FormGroup({
-    userName: new FormControl(null, [Validators.required]),
+    userName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
     password: new FormControl(null, [Validators.required]),
-    confirmPassword: new FormControl(null),
+  });
+
+  forgetPasswordForm = new FormGroup({
+    userName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
   });
 
   signUpForm = new FormGroup({
-    firstName: new FormControl(null, [Validators.required]),
-    lastName: new FormControl(null, [Validators.required]),
-    mobile: new FormControl(null, [Validators.required]),
-    emailId: new FormControl(null, [Validators.required]),
+    firstName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    lastName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    mobile: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^(\+\d{1,3}[- ]?)?\d{10}$/),
+    ]),
+    emailId: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/[^\s@]+@[^\s@]+\.[^\s@]+/),
+    ]),
     designation: new FormControl(null, [Validators.required]),
-    govtIDNumber: new FormControl(null, [Validators.required]),
-    userName: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required]),
-    confirmPassword: new FormControl(null, [Validators.required]),
+    govtIDNumber: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    userName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+      ),
+    ]),
+    confirmPassword: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+      ),
+    ]),
   });
 
   className: string = '';
   message: any = null;
   header: any = null;
   onComponentLoad: boolean = true;
+  onLoad: boolean = true;
+  samePassword: boolean = true;
 
   isLoggedIn =
     sessionStorage.getItem('isAuthenticated') == 'true' ? true : false;
 
   ngOnInit(): void {}
+
+  comparePassword() {
+    this.onLoad = false;
+    if (
+      this.signUpForm.get('password')?.value ==
+      this.signUpForm.get('confirmPassword')?.value
+    )
+      this.samePassword = true;
+    else {
+      this.signUpForm.get('confirmPassword')?.setErrors({ incorrect: true });
+      this.samePassword = false;
+    }
+  }
 
   // login
   login() {
@@ -65,9 +123,6 @@ export class DashboardComponent {
             this.onComponentLoad = true;
             this.header = null;
             this.message = null;
-          }, 1500);
-
-          setTimeout(() => {
             $('#loginModal').modal('hide');
             this.loginForm.reset();
             this.router.navigate(['/inner-dashboard']);
@@ -114,14 +169,9 @@ export class DashboardComponent {
             this.onComponentLoad = true;
             this.header = null;
             this.message = null;
-          }, 1500);
-
-          setTimeout(() => {
             $('#signUpModal').modal('hide');
             this.signUpForm.reset();
           }, 1500);
-
-          this.spinnerService.hide();
 
           swal.fire({
             text: response.emailSent
@@ -131,6 +181,8 @@ export class DashboardComponent {
             showConfirmButton: false,
             timer: 4500,
           });
+
+          this.spinnerService.hide();
         },
         (err: any) => {
           console.error(`Error [saveUser]:  , ${JSON.stringify(err.error)}`);
@@ -157,9 +209,8 @@ export class DashboardComponent {
     this.header = null;
     this.message = null;
     this.loginForm.reset();
+    this.forgetPasswordForm.reset();
     this.isForgetPassword = true;
-    this.loginForm.get('confirmPassword')?.setValidators([Validators.required]);
-    this.loginForm.updateValueAndValidity();
   }
 
   onBackToLoginSelection() {
@@ -168,16 +219,17 @@ export class DashboardComponent {
     this.header = null;
     this.message = null;
     this.loginForm.reset();
+    this.forgetPasswordForm.reset();
     this.isForgetPassword = false;
-    this.loginForm.get('confirmPassword')?.clearValidators();
-    this.loginForm.get('confirmPassword')?.updateValueAndValidity();
   }
 
   forgetPassword() {
     try {
       this.spinnerService.show();
-      const query = `userName=${this.loginForm.get('userName')?.value}`;
-      this.userService.forgetPassword(query, this.loginForm.value).subscribe(
+      const query = `userName=${
+        this.forgetPasswordForm.get('userName')?.value
+      }`;
+      this.userService.forgetPassword(query).subscribe(
         (response: any) => {
           this.onComponentLoad = false;
           this.className = 'alert alert-success';
@@ -190,10 +242,18 @@ export class DashboardComponent {
             this.header = null;
             this.message = null;
             this.loginForm.reset();
+            this.forgetPasswordForm.reset();
             this.isForgetPassword = false;
-            this.loginForm.get('confirmPassword')?.clearValidators();
-            this.loginForm.get('confirmPassword')?.updateValueAndValidity();
           }, 3000);
+
+          swal.fire({
+            text: response.emailSent
+              ? 'Reset Password has been sent to your registered emailId. Thank You!'
+              : 'Reset Password failed to send to your registered emailId. Please contact administrator for more details.',
+            icon: response.emailSent ? 'success' : 'error',
+            showConfirmButton: false,
+            timer: 4500,
+          });
 
           this.spinnerService.hide();
         },
@@ -222,5 +282,7 @@ export class DashboardComponent {
     this.isForgetPassword = false;
     this.loginForm.reset();
     this.signUpForm.reset();
+    this.forgetPasswordForm.reset();
+    this.onLoad = true;
   }
 }

@@ -12,11 +12,6 @@ const mobilePattern = function (mobile) {
     return regex.test(mobile)
 }
 
-// const passwordPattern = function (password) {
-//     const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
-//     return regex.test(password)
-// }
-
 // User schema
 const UserSchema = mongoose.Schema({
     userName: {

@@ -14,7 +14,7 @@ const login = async (req, res) => {
         const user = await userCrud.getByQuery({ userName: userName })
         if (!user.length) return res.status(404).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.INVALID_USER_NAME}` })
         if (user[0].approvalStatus == 'PENDING') return res.status(403).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.APPROVAL_STATUS_PENDING}` })
-        if (user[0].approvalStatus == 'REJECT') return res.status(403).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.APPROVAL_STATUS_REJECT}` })
+        if (user[0].approvalStatus == 'REJECTED') return res.status(403).send({ message: MESSAGE.LOGIN.FAILED, body: `${MESSAGE.LOGIN.APPROVAL_STATUS_REJECT}` })
 
         // Matching password
         console.log(user[0].password)

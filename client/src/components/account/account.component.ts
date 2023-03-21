@@ -18,10 +18,24 @@ export class AccountComponent {
   ) {}
 
   accountForm = new FormGroup({
-    firstName: new FormControl(null, [Validators.required]),
-    lastName: new FormControl(null, [Validators.required]),
-    mobile: new FormControl(null, [Validators.required]),
-    emailId: new FormControl(null, [Validators.required]),
+    firstName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    lastName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    mobile: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^(\+\d{1,3}[- ]?)?\d{10}$/),
+    ]),
+    emailId: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/[^\s@]+@[^\s@]+\.[^\s@]+/),
+    ]),
   });
 
   className: string = '';

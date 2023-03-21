@@ -166,7 +166,9 @@
                     signUpForm.get('designation')?.invalid
                 }"
               >
-                <option value=null>Select Designation *</option>
+                <option value="null" selected hidden>
+                  Select Designation *
+                </option>
                 <option value="Doctor">Doctor</option>
                 <option value="Nurse Practioner">Nurse Practioner</option>
               </select>
@@ -230,7 +232,7 @@
             </div>
             <div class="col-12">
               <input
-                type="email"
+                type="password"
                 class="form-control bg-light border-0"
                 placeholder="Password *"
                 style="height: 55px"
@@ -241,6 +243,7 @@
                       signUpForm.get('password')?.touched) &&
                     signUpForm.get('password')?.invalid
                 }"
+                (keyup)="onLoad ? null : comparePassword()"
               />
               <span
                 class="text-danger"
@@ -254,7 +257,7 @@
             </div>
             <div class="col-xl-12">
               <input
-                type="text"
+                type="password"
                 class="form-control bg-light border-0"
                 placeholder="Confirm Password *"
                 style="height: 55px"
@@ -265,6 +268,7 @@
                       signUpForm.get('confirmPassword')?.touched) &&
                     signUpForm.get('confirmPassword')?.invalid
                 }"
+                (keyup)="comparePassword()"
               />
               <span
                 class="text-danger"
@@ -275,6 +279,10 @@
                 "
                 >Confirm Password must meet validation criteria.
               </span>
+              <br />
+              <span class="text-danger" *ngIf="!samePassword"
+                >Your password and confirm password do not match.</span
+              >
             </div>
             <div [ngClass]="className" *ngIf="!onComponentLoad">
               <span
@@ -312,7 +320,7 @@
         </h1>
       </div>
       <div class="modal-body">
-        <form [formGroup]="loginForm">
+        <form [formGroup]="loginForm" *ngIf="!isForgetPassword">
           <div class="row g-3">
             <div class="col-xl-12">
               <input
@@ -363,28 +371,53 @@
               </span>
             </div>
 
-            <div class="col-12" *ngIf="isForgetPassword">
+            <div [ngClass]="className" *ngIf="!onComponentLoad">
+              <span
+                >{{ header ? header : "Error" }}!
+                {{ message ? message : "Internal Server Error." }}.</span
+              >
+            </div>
+            <div class="col-12">
+              <button
+                (click)="login()"
+                class="btn btn-dark w-100 py-3"
+                [disabled]="loginForm.invalid"
+              >
+                <span> Login</span>
+              </button>
+            </div>
+            <a
+              class="btn btn-link btn-floating mx-1"
+              (click)="onForgetPasswordSelection()"
+              >Forget Password <i class="fa fa-question-circle"></i
+            ></a>
+          </div>
+        </form>
+
+        <form [formGroup]="forgetPasswordForm" *ngIf="isForgetPassword">
+          <div class="row g-3">
+            <div class="col-xl-12">
               <input
-                type="password"
-                placeholder="Confirm Password *"
+                type="text"
                 class="form-control bg-light border-0"
+                placeholder="Username *"
                 style="height: 55px"
-                formControlName="confirmPassword"
+                formControlName="userName"
                 [ngClass]="{
                   'input-error':
-                    (loginForm.get('confirmPassword')?.dirty ||
-                      loginForm.get('confirmPassword')?.touched) &&
-                    loginForm.get('confirmPassword')?.invalid
+                    (forgetPasswordForm.get('userName')?.dirty ||
+                      forgetPasswordForm.get('userName')?.touched) &&
+                    forgetPasswordForm.get('userName')?.invalid
                 }"
               />
               <span
                 class="text-danger"
                 *ngIf="
-                  (loginForm.get('confirmPassword')?.dirty ||
-                    loginForm.get('confirmPassword')?.touched) &&
-                  loginForm.get('confirmPassword')!.invalid
+                  (forgetPasswordForm.get('userName')?.dirty ||
+                    forgetPasswordForm.get('userName')?.touched) &&
+                  forgetPasswordForm.get('userName')!.invalid
                 "
-                >Confirm Password must meet validation criteria.
+                >Username must meet validation criteria.
               </span>
             </div>
 
@@ -396,29 +429,21 @@
             </div>
             <div class="col-12">
               <button
-                (click)="!isForgetPassword ? login() : forgetPassword()"
+                (click)="forgetPassword()"
                 class="btn btn-dark w-100 py-3"
-                [disabled]="loginForm.invalid"
+                [disabled]="forgetPasswordForm.invalid"
               >
-                <span>
-                  {{ isForgetPassword ? "Forget Password" : "Login " }}</span
-                >
+                <span> Forget Password</span>
               </button>
             </div>
             <a
               class="btn btn-link btn-floating mx-1"
-              *ngIf="!isForgetPassword"
-              (click)="onForgetPasswordSelection()"
-              >Forget Password <i class="fa fa-question-circle"></i
-            ></a>
-            <a
-              class="btn btn-link btn-floating mx-1"
-              *ngIf="isForgetPassword"
               (click)="onBackToLoginSelection()"
               >Back to login <i class="fa fa-arrow-left"></i
             ></a>
           </div>
         </form>
+
         <!-- <div class="modal-footer"></div> -->
       </div>
     </div>

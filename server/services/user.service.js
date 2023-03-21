@@ -10,7 +10,7 @@ const createUsers = async (req, res) => {
         console.log(`User created succesfully, ${JSON.stringify(result)}`);
 
         //Send Email 
-        req.body[0]['emailForReview'] = true;
+        req.body[0]['reqOnReviewApprovalStatus'] = true;
         const isEmailSent = await emailService.sendMail(req.body[0])
         console.log(`isEmailSent: ${isEmailSent.emailSent}`);
         if (isEmailSent) emailSent = isEmailSent.emailSent;
@@ -42,17 +42,32 @@ const getByQuery = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const _result = await userCrud.getByQuery(req.query ? req.query : {})
-        if (!_result.length) return res.status(404).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${MESSAGE.INVALID_ID}: ${req.params.id}` })
+        if (!_result.length) return res.status(404).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${MESSAGE.INVALID_USER}` })
+
+
+        if (req.body['approvalStatus']) { // Approve Status
+            console.log("Request coming for approve status!")
+            req.body['reqOnUpdateApprovalStatus'] = true;
+        }
+
+        if (req.query['userName']) { //Password Reset
+            console.log("Request coming for password reset!")
+            req.body['reqOnPasswordReset'] = true;
+            req.body['emailId'] = _result[0].emailId;
+            req.body['password'] = req.query.userName.substring(0, 4) + "@123";
+        }
 
         const result = await userCrud.update(req.query ? req.query : {}, req.body)
         console.log(`User updated succesfully, ${JSON.stringify(result)}`);
 
-        //Send Email if Approve/Reject
+        //Send Email if Approve/Reject or passwordReset
         var emailSent = false;
-        req.body['emailForReview'] = false;
-        const isEmailSent = await emailService.sendMail(req.body)
-        console.log(`isEmailSent: ${isEmailSent.emailSent}`);
-        if (isEmailSent) emailSent = isEmailSent.emailSent;
+        if (req.body['reqOnUpdateApprovalStatus'] || req.query['userName']) {
+            console.log("Email require to send!")
+            const isEmailSent = await emailService.sendMail(req.body)
+            console.log(`isEmailSent: ${isEmailSent.emailSent}`);
+            if (isEmailSent) emailSent = isEmailSent.emailSent;
+        } else console.log("Email not require to send!")
 
         return res.send({ message: MESSAGE.USER_UDPATE.SUCCESS, body: null, emailSent: emailSent ? emailSent : false })
     } catch (err) {

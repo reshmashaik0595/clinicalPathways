@@ -4,6 +4,7 @@ const SERVER = {
 }
 
 const MESSAGE = {
+    INVALID_USER: "User not found",
     USER_CREATE: {
         SUCCESS: 'User(s) created successfully',
         FAILED: 'Failed to create user(s)'
