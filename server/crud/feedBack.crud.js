@@ -1,4 +1,4 @@
-const Feedback = require('../models/feedBack')
+const Feedback = require('../models/feedback')
 
 // Create an new feedBack
 const post = async (feedbacks) => {
@@ -16,8 +16,6 @@ const post = async (feedbacks) => {
 const update = async (query, feedBack) => {
     try {
         delete feedBack._id
-        console.log(query);
-        console.log(feedBack);
         const result = await Feedback.updateMany(query, feedBack)
         console.log(`Feedback updated succesfully, ${JSON.stringify(result)}`)
         return result
@@ -42,7 +40,7 @@ const getByQuery = async (query) => {
 // Get feedback by query param
 const deleteByQuery = async (query) => {
     try {
-        const result = await Feedback.remove(query).sort({ _id: -1 })
+        const result = await Feedback.remove(query)
         console.log(`Feedback fetched successfully , ${JSON.stringify(result)}`)
         return result
     } catch (err) {

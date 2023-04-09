@@ -10,7 +10,7 @@
     <img src="assets/img/logo.png" style="height: 25%; width: 25%" />
   </h4>
   <h5 class="text-primary d-flex justify-content-center">
-    <p>{{fullName}}</p>
+    <p>{{ fullName }}</p>
   </h5>
   <div class="list-group rounded-0">
     <a
@@ -39,18 +39,20 @@
       ></span>
       <span class="ml-2">My Account</span>
     </a>
-    <a
-      (click)="routePage('pathways')"
-      class="list-group-item list-group-item-action border-0 d-flex align-items-center"
-      [class.active]="currentPage == '/pathways'"
-      *ngIf="isAdmin == 'true'"
-    >
-      <span
-        class="bi bi-text-center"
-        [class.bi-white]="currentPage == '/pathways'"
-      ></span>
-      <span class="ml-2">Add/Modify Pathways</span>
-    </a>
+    <div *ngFor="let pathway of pathwaysList">
+      <a
+        (click)="routePage(pathway.pathway)"
+        class="list-group-item list-group-item-action border-0 d-flex align-items-center"
+        [class.active]="currentPage == '/' + pathway.pathway"
+        *ngIf="isAdmin == 'true'"
+      >
+        <span
+          class="bi bi-text-center"
+          [class.bi-white]="currentPage == '/' + pathway.pathway"
+        ></span>
+        <span class="ml-2">{{ pathway.pathway }}</span>
+      </a>
+    </div>
     <a
       (click)="routePage('users')"
       class="list-group-item list-group-item-action border-0 d-flex align-items-center"

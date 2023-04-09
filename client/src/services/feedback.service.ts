@@ -9,20 +9,14 @@ import { url } from '../config/constants';
 export class FeedbackService {
   constructor(private http: HttpClient) {}
 
-  // Create a new user
-  saveUser(userData: any): Observable<any> {
-    console.log(`userData: ${JSON.stringify(userData)}`);
-    return this.http.post(url.domainurl + `users`, userData);
-  }
-
   // Get a feedbackQ
   getFeedbackbyQuery(query: any): Observable<any> {
     console.log(`feedBack Q: ${JSON.stringify(query)}`);
-    return this.http.get(url.domainurl + `feedbackQuestions?${query}`);
+    return this.http.get(url.domainurl + `feedbacks?${query}`);
   }
 
   postComments(feedBackObj: any): Observable<any> {
     console.log(`feedBack Obj: ${JSON.stringify(feedBackObj)}`);
-    return this.http.post(url.domainurl + `feedback/comments`, feedBackObj);
+    return this.http.post(url.domainurl + `feedbacks/comments`, feedBackObj);
   }
 }

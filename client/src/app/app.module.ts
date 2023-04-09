@@ -21,6 +21,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from 'src/services/auth.guard';
 import { NgxLoaderSpinnerModule } from 'ngx-loader-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SmokingCessationComponent } from 'src/components/smoking-cessation/smoking-cessation.component';
+import { IngrownToenailComponent } from 'src/components/ingrown-toenail/ingrown-toenail.component';
+import { AcuteSinusitusComponent } from 'src/components/acute-sinusitus/acute-sinusitus.component';
+import { PlantarCutaneousWartsComponent } from 'src/components/plantar-cutaneous-warts/plantar-cutaneous-warts.component';
+import { SimplifiedDentalPainComponent } from 'src/components/simplified-dental-pain/simplified-dental-pain.component';
+import { BiteLymeDiseaseComponent } from 'src/components/bite-lyme-disease/bite-lyme-disease.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +44,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AccountComponent,
     UsersComponent,
     PathwaysComponent,
+    SmokingCessationComponent,
+    IngrownToenailComponent,
+    AcuteSinusitusComponent,
+    PlantarCutaneousWartsComponent,
+    SimplifiedDentalPainComponent,
+    BiteLymeDiseaseComponent
   ],
   imports: [
     BrowserAnimationsModule,

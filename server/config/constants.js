@@ -34,6 +34,22 @@ const MESSAGE = {
         SUCCESS: 'Feedback deleted successfully',
         FAILED: 'Failed to deleted feedback'
     },
+    PATHWAY_CREATE: {
+        SUCCESS: 'Pathway(s) created successfully',
+        FAILED: 'Failed to create pathway(s)'
+    },
+    PATHWAY_READ: {
+        SUCCESS: 'Pathway(s) fetched successfully',
+        FAILED: 'Failed to fetch pathway(s)'
+    },
+    PATHWAY_UDPATE: {
+        SUCCESS: 'Pathway updated successfully',
+        FAILED: 'Failed to update pathway'
+    },
+    PATHWAY_DELETE: {
+        SUCCESS: 'Pathway deleted successfully',
+        FAILED: 'Failed to deleted pathway'
+    },
     LOGIN: {
         SUCCESS: 'Login successful',
         FAILED: 'Login failed',
@@ -77,10 +93,23 @@ const ON_LOAD_FEEDBACK_QUESTIONS = [
     }
 ]
 
+const ON_LOAD_PATHWAYS = [
+    {
+        "pathway": "Smoking Cessation",
+        "visible": true
+    },
+    {
+        "pathway": "Simplified Dental Pain",
+        "visible": true
+    }
+]
+
+
 module.exports = {
     SERVER,
     MESSAGE,
     ADMIN_DEFAULT_DATA,
     ON_LOAD_FEEDBACK_QUESTIONS,
-    EMAIL
+    EMAIL,
+    ON_LOAD_PATHWAYS
 }

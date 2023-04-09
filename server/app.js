@@ -5,7 +5,7 @@ const bodyparser = require('body-parser')
 const cors = require('cors')
 const app = express()
 
-const { SERVER, ADMIN_DEFAULT_DATA, ON_LOAD_FEEDBACK_QUESTIONS } = require('./config/constants')
+const { SERVER, ADMIN_DEFAULT_DATA, ON_LOAD_FEEDBACK_QUESTIONS, ON_LOAD_PATHWAYS } = require('./config/constants')
 
 const IP = 'localhost'
 
@@ -15,7 +15,8 @@ mongoose.set('useUnifiedTopology', true)
 // Import routes
 const userRoute = require('./routes/user.route')
 const authRoute = require('./routes/auth.route')
-const feedBackRoute = require('./routes/feedBack.route')
+const feedbackRoute = require('./routes/feedback.route')
+const pathwayRoute = require('./routes/pathway.route')
 
 
 // Connect to mongodb
@@ -40,8 +41,8 @@ app.use(cors())
 app.use(bodyparser.json())
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute)
-app.use('/api/feedbackquestions', feedBackRoute)
-app.use('/api/feedback', feedBackRoute)
+app.use('/api/feedbacks', feedbackRoute)
+app.use('/api/pathways', pathwayRoute)
 
 // Test API
 app.get('/', (req, res) => {
@@ -62,7 +63,7 @@ async function adminUserCreation() {
 }
 adminUserCreation();
 
-const Feedback = require('./models/feedBack')
+const Feedback = require('./models/feedback')
 async function feedBackCreation() {
     const feedBackObj = ON_LOAD_FEEDBACK_QUESTIONS
     feedBackObj.forEach(async element => {
@@ -74,6 +75,20 @@ async function feedBackCreation() {
     });
 }
 feedBackCreation();
+
+
+const Pathway = require('./models/pathway')
+async function pathwayCreation() {
+    const pathwayObj = ON_LOAD_PATHWAYS
+    pathwayObj.forEach(async element => {
+        const pathway = await Pathway.find(element);
+        if (pathway.length) return
+        const newPathway = new Pathway(element)
+        const result = await newPathway.save() // Create a pathway
+        result ? console.log('Pathway created succesfully') : console.error('Failed to create pathway')
+    });
+}
+pathwayCreation();
 
 // [For http]
 // Create a server
