@@ -5,7 +5,7 @@ const bodyparser = require('body-parser')
 const cors = require('cors')
 const app = express()
 
-const { SERVER, ADMIN_DEFAULT_DATA } = require('./config/constants')
+const { SERVER, ADMIN_DEFAULT_DATA, ON_LOAD_FEEDBACK_QUESTIONS } = require('./config/constants')
 
 const IP = 'localhost'
 
@@ -15,10 +15,14 @@ mongoose.set('useUnifiedTopology', true)
 // Import routes
 const userRoute = require('./routes/user.route')
 const authRoute = require('./routes/auth.route')
+const feedBackRoute = require('./routes/feedBack.route')
+
 
 // Connect to mongodb
 // mongoose.connect(`mongodb://${IP}/${SERVER.DATABASE_NAME}`, { useNewUrlParser: true })
 mongoose.connect(`mongodb+srv://reshmashaik462:mongoAtlas786@cluster-free.4gppmvb.mongodb.net/${SERVER.DATABASE_NAME}`, { useNewUrlParser: true })
+// mongoose.connect(`mongodb+srv://reshmashaik462:mongoAtlas786@cluster-free.4gppmvb.mongodb.net/test`)
+// mongoose.connect(`mongodb://adminuser:${encodeURIComponent('Admin@pwd')}@147.182.152.183:27017:ClinicalPathway`, { useNewUrlParser: true })
 
 // on connection
 mongoose.connection.on('connected', (err) => {
@@ -36,6 +40,8 @@ app.use(cors())
 app.use(bodyparser.json())
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute)
+app.use('/api/feedbackquestions', feedBackRoute)
+app.use('/api/feedback', feedBackRoute)
 
 // Test API
 app.get('/', (req, res) => {
@@ -56,19 +62,18 @@ async function adminUserCreation() {
 }
 adminUserCreation();
 
-
-// Create a user (if not exists) on app initialization
-// async function UserCreation() {
-//     const user = await User.find({ userName: 'user_123' })
-//     if (user.length) return // User already exists
-//     // user data
-//     const userObj = USER_DEFAULT_DATA
-//     const newUser = new User(userObj)
-//     const result = await newUser.save() // Create a admin user
-//     result ? console.log('User created succesfully') : console.error('Failed to create user')
-// }
-// UserCreation();
-
+const Feedback = require('./models/feedBack')
+async function feedBackCreation() {
+    const feedBackObj = ON_LOAD_FEEDBACK_QUESTIONS
+    feedBackObj.forEach(async element => {
+        const feedBack = await Feedback.find(element);
+        if (feedBack.length) return
+        const newFeedback = new Feedback(element)
+        const result = await newFeedback.save() // Create a feedback
+        result ? console.log('Feedback created succesfully') : console.error('Failed to create feedback')
+    });
+}
+feedBackCreation();
 
 // [For http]
 // Create a server

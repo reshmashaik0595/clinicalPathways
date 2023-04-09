@@ -621,6 +621,23 @@ a {
   border-color: #34b9c3 !important;
 }
 
-.bi-person-check-fill, .bi-x-square-fill{
+.bi-person-check-fill,
+.bi-x-square-fill {
   cursor: pointer !important;
+}
+
+/*------------- Form ---------------*/
+.feedback {
+  background-color: #34b9c3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border-color: #34b9c3;
+}
+
+#mybutton {
+  position: fixed;
+  bottom: -4px;
+  right: 10px;
+  z-index:50;
 }

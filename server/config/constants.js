@@ -4,7 +4,8 @@ const SERVER = {
 }
 
 const MESSAGE = {
-    INVALID_USER: "User not found",
+    INVALID_USER: "User/Id not found",
+    INVALID_QUERY: "Invalid Query",
     USER_CREATE: {
         SUCCESS: 'User(s) created successfully',
         FAILED: 'Failed to create user(s)'
@@ -16,6 +17,22 @@ const MESSAGE = {
     USER_UDPATE: {
         SUCCESS: 'User updated successfully',
         FAILED: 'Failed to update user'
+    },
+    FEEDBACK_CREATE: {
+        SUCCESS: 'Feedback(s) created successfully',
+        FAILED: 'Failed to create feedback(s)'
+    },
+    FEEDBACK_READ: {
+        SUCCESS: 'Feedback(s) fetched successfully',
+        FAILED: 'Failed to fetch feedback(s)'
+    },
+    FEEDBACK_UDPATE: {
+        SUCCESS: 'Feedback updated successfully',
+        FAILED: 'Failed to update feedback'
+    },
+    FEEDBACK_DELETE: {
+        SUCCESS: 'Feedback deleted successfully',
+        FAILED: 'Failed to deleted feedback'
     },
     LOGIN: {
         SUCCESS: 'Login successful',
@@ -49,19 +66,21 @@ const ADMIN_DEFAULT_DATA = {
     mobile: '0000000000'
 }
 
-// const USER_DEFAULT_DATA = {
-//     firstName: 'User',
-//     lastName: 'Name',
-//     userName: 'user',
-//     password: 'User@123',
-//     emailId: 'user@flemingcollege.ca',
-//     mobile: '9999999999'
-// }
+const ON_LOAD_FEEDBACK_QUESTIONS = [
+    {
+        generalFeedback: false,
+        question: "Do you have an edit or update to suggest to an existing Roadmap ?"
+    },
+    {
+        generalFeedback: true,
+        question: "Do you have general feedback on RoadmapsPTBO ?"
+    }
+]
 
 module.exports = {
     SERVER,
     MESSAGE,
     ADMIN_DEFAULT_DATA,
-    // USER_DEFAULT_DATA
+    ON_LOAD_FEEDBACK_QUESTIONS,
     EMAIL
 }
