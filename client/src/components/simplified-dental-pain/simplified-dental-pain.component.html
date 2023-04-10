@@ -8,11 +8,1157 @@
           class="jumbotron jumbotron-fluid rounded bg-white border-0 shadow-sm border-left px-4"
         >
           <div class="container">
-            <h1 class="display-4 mb-2 text-primary">Pathways Coming Soon</h1>
-            <p class="text-muted">
-              “The good physician treats the disease; the great physician treats
-              the patient who has the disease.” ~ William Osler
-            </p>
+            <h1 class="display-4 mb-2 text-primary">Smoking Cessation</h1>
+            <div class="text-muted">
+              <div class="accordion" id="parentAcc">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" [id]="'child1Hea'">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#child1Coll'"
+                      aria-expanded="true"
+                      [attr.aria-controls]="'child1Coll'"
+                    >
+                      History & Interview
+                    </button>
+                  </h2>
+                  <div
+                    [id]="'child1Coll'"
+                    class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'child1Hea'"
+                    data-bs-parent="#parentAcc"
+                  >
+                    <div class="accordion-body">
+                      <div class="accordion" id="child1Acc">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" [id]="'child1child1hea'">
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#child1child1coll'"
+                              aria-expanded="true"
+                              [attr.aria-controls]="'child1child1coll'"
+                            >
+                              5 As
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'child1child1coll'"
+                            class="accordion-collapse collapse"
+                            [attr.aria-labelledby]="'child1child1hea'"
+                            data-bs-parent="#child1Acc"
+                          >
+                            <div class="accordion-body">
+                              <div class="accordion" id="child1child1child1Acc">
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child1Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child1Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child1Coll'
+                                      "
+                                    >
+                                      Ask about tobacco use
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child1Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child1Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>Ask if ever used tobacco</li>
+                                        <li>
+                                          Ask about all tobacco products
+                                          (cigarettes, chew, e-cigarettes)
+                                        </li>
+                                        <li>Frequency, amounts, products</li>
+                                        <li>
+                                          Previous quitting attempts, duration,
+                                          and outcomes
+                                        </li>
+                                        <li>
+                                          How soon after awakening do you smoke
+                                          your first cigarette? (> or < 30
+                                          minutes?)
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child2Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child2Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child2Coll'
+                                      "
+                                    >
+                                      Advise quitting
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child2Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child2Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>
+                                          Even brief advice (<5 min) can
+                                          increase abstinence rates
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child3Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child3Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child3Coll'
+                                      "
+                                    >
+                                      Assess readiness to quit
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child3Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child3Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>
+                                          Stages of change paradigm
+                                          <ul>
+                                            <li>
+                                              Pre-contemplative → motivational
+                                              interviewing to create and amplify
+                                              discrepancy between current
+                                              behaviour and future goals
+                                            </li>
+                                            <li>Contemplative</li>
+                                            <li>Preparation</li>
+                                            <li>Action</li>
+                                            <li>Maintenance</li>
+                                          </ul>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child4Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child4Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child4Coll'
+                                      "
+                                    >
+                                      Assist those ready
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child4Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child4Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>Establish quit date</li>
+                                        <li>
+                                          Address barriers
+                                          <ul>
+                                            <li>
+                                              Withdrawal (see Pharmacologic
+                                              management)
+                                            </li>
+                                            <li>Triggers to smoking</li>
+                                            <li>
+                                              It is often important to ask if
+                                              spouse or others living in the
+                                              home also smoke
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child5Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child5Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child5Coll'
+                                      "
+                                    >
+                                      Arrange follow up or refer to local
+                                      program (see Behavioural Management)
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child5Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child5Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>Follow up in 1-2 wk</li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child1child1child6Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child1child1child6Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child1child1child6Coll'
+                                      "
+                                    >
+                                      Inquire re: caffeine intake
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child1child1child6Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child1child1child6Hea'
+                                    "
+                                    data-bs-parent="#child1child1child1Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>
+                                          Nicotine can increase the metabolism
+                                          of caffeine
+                                        </li>
+                                        <li>
+                                          Those who quit smoking are often
+                                          recommended to decrease caffeine
+                                          consumption by 50% or they may mistake
+                                          the effects of caffeine for nicotine
+                                          withdrawal
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" [id]="'child1child2hea'">
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#child1child2coll'"
+                              aria-expanded="true"
+                              [attr.aria-controls]="'child1child2coll'"
+                            >
+                              OHIP Billing pearls (for MDs only)
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'child1child2coll'"
+                            class="accordion-collapse collapse"
+                            [attr.aria-labelledby]="'child1child2hea'"
+                            data-bs-parent="#child1Acc"
+                          >
+                            <div class="accordion-body">
+                              <ul>
+                                <li>
+                                  E079 (out of basket): Initial discussion with
+                                  patient regarding smoking cessation. Can be
+                                  billed with most primary care codes but cannot
+                                  be billed with K030. Can be billed once/year
+                                </li>
+                                <li>
+                                  K039 (out of basket): Smoking cessation follow
+                                  up visit. Can be billed twice within two
+                                  months of billing an E079. Must include
+                                  documentation of the 5As.
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" [id]="'child2Hea'">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#child2Coll'"
+                      aria-expanded="true"
+                      [attr.aria-controls]="'child2Coll'"
+                    >
+                      Management
+                    </button>
+                  </h2>
+                  <div
+                    [id]="'child2Coll'"
+                    class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'child2Hea'"
+                    data-bs-parent="#parentAcc"
+                  >
+                    <div class="accordion-body">
+                      <ul>
+                        <li>Only if at contemplative stage or higher</li>
+                        <li>
+                          Combination of behavioural & pharmacologic most
+                          effective
+                        </li>
+                      </ul>
+                      <div class="accordion" id="child2Acc">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" [id]="'child2child1Hea'">
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#child2child1Coll'"
+                              aria-expanded="true"
+                              [attr.aria-controls]="'child2child1Coll'"
+                            >
+                              Behavioural
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'child2child1Coll'"
+                            class="accordion-collapse collapse"
+                            [attr.aria-labelledby]="'child2child1Hea'"
+                            data-bs-parent="#child2Acc"
+                          >
+                            <div class="accordion-body">
+                              <ul>
+                                <li>
+                                  Individual counselling
+                                  <ul>
+                                    <li>
+                                      FHT to quit
+                                      <ul>
+                                        <li>
+                                          Patients who are part of the
+                                          Peterborough Family Health Team can
+                                          access smoking cessation services
+                                          through the FHT to quit program
+                                        </li>
+                                        <li>
+                                          Patients will participate in a
+                                          counselling and treatment program led
+                                          by pharmacists and are eligible to
+                                          receive up to ____ weeks of free
+                                          nicotine replacement therapy
+                                        </li>
+                                        <li>
+                                          Patients can self-refer - details
+                                          here.
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  Group counselling
+                                  <ul>
+                                    <li>
+                                      Do we have any examples of support for
+                                      this locally?
+                                    </li>
+                                  </ul>
+                                </li>
+
+                                <li>Text based</li>
+                                <li>
+                                  Mobile apps
+                                  <ul>
+                                    <li>
+                                      QuitGuide: tracks cravings, motivational
+                                      messaging
+                                    </li>
+                                    <li>quitSTART: games and challenges</li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  Resources for patients
+                                  <ul>
+                                    <li>
+                                      Smokers Helpline website
+                                      <ul>
+                                        <li>Cost savings calculator</li>
+                                        <li>Plan generator</li>
+                                        <li>Peer resources</li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" [id]="'child2child2Hea'">
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#child2child2Coll'"
+                              aria-expanded="true"
+                              [attr.aria-controls]="'child2child2Coll'"
+                            >
+                              Pharmacologic
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'child2child2Coll'"
+                            class="accordion-collapse collapse"
+                            [attr.aria-labelledby]="'child2child2Hea'"
+                            data-bs-parent="#child2Acc"
+                          >
+                            <div class="accordion-body">
+                              <div class="accordion" id="child2child2Acc">
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child2child2child1Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child2child2child1Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child2child2child1Coll'
+                                      "
+                                    >
+                                      Nicotine replacement therapy (NRT)
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child2child2child1Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child2child2child1Hea'
+                                    "
+                                    data-bs-parent="#child2child2Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>
+                                          This includes both long acting
+                                          therapies (i.e: nicotine patch) or
+                                          short acting (i.e: nicotine gum,
+                                          lozenges, inhaler)
+                                        </li>
+                                        <li>
+                                          The goal is to provide a continuous
+                                          small amount of nicotine to patients
+                                          to decrease symptoms of withdrawal
+                                          <ul>
+                                            <li>Irritability</li>
+                                            <li>Low mood</li>
+                                            <li>Cravings</li>
+                                            <li>Difficulty concentrating</li>
+                                          </ul>
+                                        </li>
+                                        <li>
+                                          Can use NRT if patients are still
+                                          smoking but patients should need to
+                                          decrease # of cigarettes
+                                        </li>
+                                      </ul>
+
+                                      <div
+                                        class="accordion"
+                                        id="child2child2child1Acc"
+                                      >
+                                        <div class="accordion-item">
+                                          <h2
+                                            class="accordion-header"
+                                            [id]="'child2child2child1child1Hea'"
+                                          >
+                                            <button
+                                              class="accordion-button"
+                                              type="button"
+                                              data-bs-toggle="collapse"
+                                              [attr.data-bs-target]="
+                                                '#child2child2child1child1Coll'
+                                              "
+                                              aria-expanded="true"
+                                              [attr.aria-controls]="
+                                                'child2child2child1child1Coll'
+                                              "
+                                            >
+                                              Nicotine Patch
+                                            </button>
+                                          </h2>
+                                          <div
+                                            [id]="
+                                              'child2child2child1child1Coll'
+                                            "
+                                            class="accordion-collapse collapse"
+                                            [attr.aria-labelledby]="
+                                              'child2child2child1child1Hea'
+                                            "
+                                            data-bs-parent="#child2child2child1Acc"
+                                          >
+                                            <div class="accordion-body">
+                                              <ul>
+                                                <li>
+                                                  Provides maintenance dose of
+                                                  nicotine through the day
+                                                </li>
+                                                <li>
+                                                  Encouraged to put patch on the
+                                                  night before quit date
+                                                </li>
+                                                <li>
+                                                  Evidence suggests that
+                                                  concurrent use of patch with
+                                                  fast acting NRT is more
+                                                  effective (ex: gum, lozenge,
+                                                  inhaler)
+                                                </li>
+                                                <li>
+                                                  Initiation Dosing:
+                                                  <ul>
+                                                    <li>
+                                                      < 10 cigs/day - start with
+                                                      14 mg patch
+                                                    </li>
+                                                    <li>
+                                                      10-29 cigs/day - start
+                                                      with 21 mg patch
+                                                    </li>
+                                                    <li>
+                                                      > 29 cigs a day - start
+                                                      with 21 mg + 7 mg patch
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                <li>
+                                                  Follow Up Monitoring
+                                                  <ul>
+                                                    <li>
+                                                      If patient has quit,
+                                                      continue current dose
+                                                    </li>
+                                                    <li>
+                                                      If patient still smoking
+                                                      <ul>
+                                                        <li>
+                                                          10 + cigs/day - add 21
+                                                          mg patch to current
+                                                          dose
+                                                        </li>
+                                                        <li>
+                                                          6-9 cigs/day - add 14
+                                                          mg patch to current
+                                                          dose
+                                                        </li>
+                                                        <li>
+                                                          1-5 cigs/day - add 7
+                                                          mg to current dose
+                                                        </li>
+                                                      </ul>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                <li>
+                                                  Treatment duration:
+                                                  <ul>
+                                                    <li>
+                                                      Best results for those
+                                                      using NRT for 8-12 weeks
+                                                    </li>
+                                                    <li>
+                                                      Suggest a taper with
+                                                      decrease no more than 7
+                                                      mg/week and monitor for
+                                                      withdrawal symptoms
+                                                    </li>
+                                                    <li>
+                                                      May need to hold at a
+                                                      specific dose if
+                                                      withdrawal symptoms recur
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                          <h2
+                                            class="accordion-header"
+                                            [id]="'child2child2child1child2Hea'"
+                                          >
+                                            <button
+                                              class="accordion-button"
+                                              type="button"
+                                              data-bs-toggle="collapse"
+                                              [attr.data-bs-target]="
+                                                '#child2child2child1child2Coll'
+                                              "
+                                              aria-expanded="true"
+                                              [attr.aria-controls]="
+                                                'child2child2child1child2Coll'
+                                              "
+                                            >
+                                              Nicotine Gum
+                                            </button>
+                                          </h2>
+                                          <div
+                                            [id]="
+                                              'child2child2child1child2Coll'
+                                            "
+                                            class="accordion-collapse collapse"
+                                            [attr.aria-labelledby]="
+                                              'child2child2child1child2Hea'
+                                            "
+                                            data-bs-parent="#child2child2child1Acc"
+                                          >
+                                            <div class="accordion-body">
+                                              <ul>
+                                                <li>
+                                                  Available in 2 mg or 4 mg
+                                                  formulations
+                                                  <ul>
+                                                    <li>
+                                                      Consider 4 mg gum if
+                                                      patients smoking first
+                                                      cigarette within 30
+                                                      minutes of waking
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                <li>
+                                                  Chew 1 piece every 1-2 hours
+                                                  and increase interval as weeks
+                                                  progress
+                                                </li>
+                                                <li>
+                                                  Proper Use: “Chew and park”
+                                                  <ul>
+                                                    <li>
+                                                      Bite down until you feel
+                                                      tingling in mouth, then
+                                                      “park” gum inside of cheek
+                                                    </li>
+                                                    <li>
+                                                      Repeat this chew and park
+                                                      process until tingling
+                                                      stops (~ 30 minutes)
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                          <h2
+                                            class="accordion-header"
+                                            [id]="'child2child2child1child3Hea'"
+                                          >
+                                            <button
+                                              class="accordion-button"
+                                              type="button"
+                                              data-bs-toggle="collapse"
+                                              [attr.data-bs-target]="
+                                                '#child2child2child1child3Coll'
+                                              "
+                                              aria-expanded="true"
+                                              [attr.aria-controls]="
+                                                'child2child2child1child3Coll'
+                                              "
+                                            >
+                                              Nicotine Lozenges
+                                            </button>
+                                          </h2>
+                                          <div
+                                            [id]="
+                                              'child2child2child1child3Coll'
+                                            "
+                                            class="accordion-collapse collapse"
+                                            [attr.aria-labelledby]="
+                                              'child2child2child1child3Hea'
+                                            "
+                                            data-bs-parent="#child2child2child1Acc"
+                                          >
+                                            <div class="accordion-body">
+                                              <ul>
+                                                <li>
+                                                  Available in 2 mg or 4 mg
+                                                  formulations
+                                                  <ul>
+                                                    <li>
+                                                      Consider 4 mg lozenge if
+                                                      patients smoking first
+                                                      cigarette within 30
+                                                      minutes of waking
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                <li>
+                                                  Recommend 1 lozenge every 1-2
+                                                  hours and increase interval as
+                                                  weeks progress
+                                                </li>
+                                                <li>
+                                                  Proper Use:
+                                                  <ul>
+                                                    <li>
+                                                      Place lozenge in mouth,
+                                                      occasionally moving from
+                                                      side to side
+                                                    </li>
+                                                    <li>
+                                                      Allow it to slowly
+                                                      dissolve over 20-30
+                                                      minutes
+                                                    </li>
+                                                    <li>
+                                                      Do not chew or swallow
+                                                      lozenge
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                          <h2
+                                            class="accordion-header"
+                                            [id]="'child2child2child1child4Hea'"
+                                          >
+                                            <button
+                                              class="accordion-button"
+                                              type="button"
+                                              data-bs-toggle="collapse"
+                                              [attr.data-bs-target]="
+                                                '#child2child2child1child4Coll'
+                                              "
+                                              aria-expanded="true"
+                                              [attr.aria-controls]="
+                                                'child2child2child1child4Coll'
+                                              "
+                                            >
+                                              Nicotine Inhaler
+                                            </button>
+                                          </h2>
+                                          <div
+                                            [id]="
+                                              'child2child2child1child4Coll'
+                                            "
+                                            class="accordion-collapse collapse"
+                                            [attr.aria-labelledby]="
+                                              'child2child2child1child4Hea'
+                                            "
+                                            data-bs-parent="#child2child2child1Acc"
+                                          >
+                                            <div class="accordion-body">
+                                              <ul>
+                                                <li>
+                                                  Typically patients will use
+                                                  6-16 cartridges/day the
+                                                  gradually reduce
+                                                </li>
+                                                <li>
+                                                  Proper Use:
+                                                  <ul>
+                                                    <li>
+                                                      Bring mouthpiece to mouth
+                                                      and inhale deeply
+                                                    </li>
+                                                    <li>
+                                                      Each cartridge lasts about
+                                                      20 minutes
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child2child2child2Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child2child2child2Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child2child2child2Coll'
+                                      "
+                                    >
+                                      Bupropion
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child2child2child2Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child2child2child2Hea'
+                                    "
+                                    data-bs-parent="#child2child2Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>
+                                          Contraindications:
+                                          <ul>
+                                            <li>History of seizures</li>
+                                            <li>
+                                              Current treatment with MAO
+                                              inhibitor
+                                            </li>
+                                            <li>
+                                              History of bipolar disorder
+                                              (exercise caution)
+                                            </li>
+                                            <li>
+                                              History of eating disorder
+                                              (exercise caution)
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li>
+                                          Establish a quite date then start at
+                                          150 mg PO qdaily x 3-5 days 10 days
+                                          before set date
+                                        </li>
+                                        <li>
+                                          If tolerated, increase dose to 150 mg
+                                          PO BID
+                                        </li>
+                                        <li>
+                                          Can be combined with NRT but limited
+                                          evidence for success in quitting
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                  <h2
+                                    class="accordion-header"
+                                    [id]="'child2child2child3Hea'"
+                                  >
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      [attr.data-bs-target]="
+                                        '#child2child2child3Coll'
+                                      "
+                                      aria-expanded="true"
+                                      [attr.aria-controls]="
+                                        'child2child2child3Coll'
+                                      "
+                                    >
+                                      Varenicline
+                                    </button>
+                                  </h2>
+                                  <div
+                                    [id]="'child2child2child3Coll'"
+                                    class="accordion-collapse collapse"
+                                    [attr.aria-labelledby]="
+                                      'child2child2child3Hea'
+                                    "
+                                    data-bs-parent="#child2child2Acc"
+                                  >
+                                    <div class="accordion-body">
+                                      <ul>
+                                        <li>Partial nicotine agonist</li>
+                                        <li>
+                                          Most effective medication for smoking
+                                          cessation
+                                        </li>
+                                        <li>
+                                          Exercise caution in patients with
+                                          history of seizure
+                                        </li>
+                                        <li>
+                                          Safe for use in patients with stable
+                                          psychiatric conditions
+                                        </li>
+                                        <li>
+                                          Quit date should no longer than 4
+                                          weeks into treatment
+                                        </li>
+                                        <li>
+                                          Dosing
+                                          <ul>
+                                            <li>
+                                              Treatment duration: 12 weeks
+                                            </li>
+                                            <li>
+                                              If successful, consider continuing
+                                              treatment for another 12 weeks
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li>
+                                          Side effects: nausea, constipation,
+                                          flatulence, increased/vivid dreams
+                                        </li>
+                                        <ul>
+                                          <li>
+                                            If intolerable, consider decrease to
+                                            dose
+                                          </li>
+                                        </ul>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="accordion-item">
+                          <h2
+                            class="accordion-header"
+                            [id]="'child2child2child1child4Hea'"
+                          >
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#child2child3Coll'"
+                              aria-expanded="true"
+                              [attr.aria-controls]="'child2child3Coll'"
+                            >
+                              Others
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'child2child3Coll'"
+                            class="accordion-collapse collapse"
+                            [attr.aria-labelledby]="
+                              'child2child2child1child4Hea'
+                            "
+                            data-bs-parent="#child2Acc"
+                          >
+                            <div class="accordion-body">
+                              <ul>
+                                <li>
+                                  Acupuncture & Hypnosis have limited evidence
+                                  <ul>
+                                    <li>
+                                      Some anecdotal effects from the relaxation
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>e-Cigarettes & vaping</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" [id]="'child3Hea'">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#child3Coll'"
+                      aria-expanded="true"
+                      [attr.aria-controls]="'child3Coll'"
+                    >
+                      References
+                    </button>
+                  </h2>
+                  <div
+                    [id]="'child3Coll'"
+                    class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'child3Hea'"
+                    data-bs-parent="#parentAcc"
+                  >
+                    <div class="accordion-body">
+                      <p>
+                        Suls JM, Luger TM, Curry SJ, Mermelstein RJ, Sporer AK,
+                        An LC. Efficacy of smoking-cessation interventions for
+                        young adults: a meta-analysis. Am J Prev Med. 2012
+                        Jun;42(6):655-62. doi: 10.1016/j.amepre.2012.02.013.
+                        PMID: 22608385; PMCID: PMC3653592.<br /><br />
+                        <a
+                          class="link"
+                          href="https://www.cdc.gov/tobacco/campaign/tips/quit-smoking/quit-smoking-medications/how-to-use-quit-smoking-medicines/how-to-use-nicotine-gum.html#:~:text=Nicotine%20gum%20is%20not%20like%20regular%20chewing%20gum.&text=Hold%20it%20for%20about%20a,the%20gum%20in%20your%20mouth."
+                          target="_blank"
+                          >How to Use Nicotine Gum</a
+                        ><br />
+                        <a
+                          href="https://www.nicorette.com/usage-science/nicorette-gum"
+                          target="_blank"
+                          class="link"
+                        >
+                          How to Use Nicorette® Gum</a
+                        >
+                        <br /><br />
+                        How to Use Nicorette Lozenge (n.d.). Retrieved November
+                        18, 2022, from
+                        <a
+                          class="link"
+                          href="https://www.nicorette.com/usage-science/nicorette-lozenge/"
+                          target="_blank"
+                          >How to Use Nicorette Lozenge</a
+                        >
+                        <br /><br />
+                        <a
+                          class="link"
+                          href="https://www.nicorette.ca/products/inhaler"
+                          target="_blank"
+                          >NICORETTE® Smoking Cessation Inhaler</a
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" [id]="'child4Hea'">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#child4Coll'"
+                      aria-expanded="true"
+                      [attr.aria-controls]="'child4Coll'"
+                    >
+                      Acknowledgements
+                    </button>
+                  </h2>
+                  <div
+                    [id]="'child4Coll'"
+                    class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'child4Hea'"
+                    data-bs-parent="#parentAcc"
+                  >
+                    <div class="accordion-body">
+                      <ul>
+                        <li>Date of last revision:</li>
+                        <li>Date of next revision:</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>

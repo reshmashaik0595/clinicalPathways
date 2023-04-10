@@ -1,4 +1,8 @@
-import { NgModule } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA,
+  NgModule,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +31,7 @@ import { AcuteSinusitusComponent } from 'src/components/acute-sinusitus/acute-si
 import { PlantarCutaneousWartsComponent } from 'src/components/plantar-cutaneous-warts/plantar-cutaneous-warts.component';
 import { SimplifiedDentalPainComponent } from 'src/components/simplified-dental-pain/simplified-dental-pain.component';
 import { BiteLymeDiseaseComponent } from 'src/components/bite-lyme-disease/bite-lyme-disease.component';
+import { AccordionModule } from 'ngx-accordion';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,7 @@ import { BiteLymeDiseaseComponent } from 'src/components/bite-lyme-disease/bite-
     AcuteSinusitusComponent,
     PlantarCutaneousWartsComponent,
     SimplifiedDentalPainComponent,
-    BiteLymeDiseaseComponent
+    BiteLymeDiseaseComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -58,9 +63,12 @@ import { BiteLymeDiseaseComponent } from 'src/components/bite-lyme-disease/bite-
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxLoaderSpinnerModule
+    NgxLoaderSpinnerModule,
+    ReactiveFormsModule,
+    AccordionModule,
   ],
   providers: [AuthGuard],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

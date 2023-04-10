@@ -639,5 +639,24 @@ a {
   position: fixed;
   bottom: -4px;
   right: 10px;
-  z-index:50;
+  z-index: 50;
+}
+
+.link {
+  cursor: pointer;
+  color: #1a0dab;
+  inline-size: 150px;
+  overflow-wrap: break-word;
+}
+
+.accordion-button::after {
+  background-image: url("https://static.thenounproject.com/png/1191469-200.png") !important;
+}
+
+.accordion-button::before {
+  background-image: url("https://static.thenounproject.com/png/1191469-200.png") !important;
+}
+
+.accordion-item {
+  margin-top: 10px !important;
 }
