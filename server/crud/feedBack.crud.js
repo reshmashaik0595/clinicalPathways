@@ -1,4 +1,4 @@
-const Feedback = require('../models/feedback')
+const Feedback = require('../models/_feedback')
 
 // Create an new feedBack
 const post = async (feedbacks) => {
