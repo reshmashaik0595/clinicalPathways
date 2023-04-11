@@ -678,7 +678,7 @@ a {
 }
 
 .active-tab,
-.nav-link:hover {
+._nav-link:hover {
   font-size: 150% !important;
   background-color: #34b9c3 !important;
   color: white !important;
@@ -690,9 +690,10 @@ a {
   text-align: center !important;
   padding-top: 10px !important;
   margin-bottom: 0.2% !important;
+  padding-bottom: 10px !important;
 }
 
-.nav-link{
+._nav-link{
   font-size: 150% !important;
   background-color: #e6f6fb !important;
   color: #34b9c3 !important;
@@ -705,5 +706,6 @@ a {
   border-color: #34b9c3;
   padding-top: 10px !important;
   margin-bottom: 0.2% !important;
+  padding-bottom: 10px !important;
 }
 
