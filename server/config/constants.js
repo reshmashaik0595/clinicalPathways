@@ -66,7 +66,7 @@ const EMAIL = {
     AUTH_EMAIL_ID: 'familydoctor2002@gmail.com', // To be updated later
     AUTH_APP_PASSWORD: 'blcwwczvnqbgovcl', // To be updated later
     EMAIL_SERVICE: 'gmail',
-    APPLICATION_URL: 'http://147.182.152.183/' // To be updated later
+    APPLICATION_URL: '' // To be updated later
 }
 
 const ADMIN_DEFAULT_DATA = {
