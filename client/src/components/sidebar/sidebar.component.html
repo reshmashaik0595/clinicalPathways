@@ -39,17 +39,17 @@
       ></span>
       <span class="ml-2">My Account</span>
     </a>
-    <div *ngFor="let pathway of pathwaysList">
+    <div>
       <a
-        (click)="routePage(pathway.pathway)"
+        (click)="routePage('pathways')"
         class="list-group-item list-group-item-action border-0 d-flex align-items-center"
-        [class.active]="currentPage == '/' + pathway.pathway"
+        [class.active]="currentPage == '/pathways'"
       >
         <span
           class="bi bi-text-center"
-          [class.bi-white]="currentPage == '/' + pathway.pathway"
+          [class.bi-white]="currentPage == '/pathways'"
         ></span>
-        <span class="ml-2">{{ pathway.pathway }}</span>
+        <span class="ml-2">Pathways</span>
       </a>
     </div>
     <a
