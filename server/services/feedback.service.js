@@ -1,5 +1,5 @@
 const { MESSAGE } = require('../config/constants')
-const feedbackCrud = require('../crud/_feedback.crud')
+const feedbackCrud = require('../crud/feedback.crud')
 
 // Create an new feedback
 const createFeedback = async (req, res) => {
