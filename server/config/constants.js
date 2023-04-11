@@ -74,7 +74,7 @@ const ADMIN_DEFAULT_DATA = {
     lastName: 'Name',
     userName: 'admin',
     password: 'Admin@123',
-    emailId: 'reshmashaik462@gmail.com',
+    emailId: 'familydoctor2002@gmail.com',
     designation: 'Admin',
     govtIDNumber: "admin",
     approvalStatus: "APPROVED",
