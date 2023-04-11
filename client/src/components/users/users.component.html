@@ -31,18 +31,18 @@
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Email ID</th>
+                          <th scope="col">First-Name</th>
+                          <th scope="col">Last-Name</th>
+                          <th scope="col">Email-ID</th>
                           <th scope="col">Mobile</th>
                           <th scope="col">Designation</th>
-                          <th scope="col">Government ID Number</th>
-                          <th scope="col">Approval Status</th>
-                          <th scope="col">Actions</th>
+                          <th scope="col">Government-ID-Number</th>
+                          <th scope="col">User-Approval-Status</th>
+                          <th scope="col">Admin-Privileges</th>
                         </tr>
                       </thead>
                       <span *ngIf="userList.length == 0"
-                        ><b>No users found</b></span
+                        ><b>No-users-found</b></span
                       >
                       <tbody>
                         <tr *ngFor="let user of userList; let i = index">
@@ -63,8 +63,7 @@
                             "
                           >
                             {{ user.approvalStatus }}
-                          </td>
-                          <td>
+                            <!-- <br> -->
                             <i
                               *ngIf="
                                 user.approvalStatus == 'PENDING' ||
@@ -89,6 +88,46 @@
                                 updateUserApprovalStatus(
                                   user._id,
                                   'REJECTED',
+                                  user.emailId
+                                )
+                              "
+                            ></i>
+                          </td>
+
+                          <td
+                            [style.color]="
+                              user.isAdmin == 'GRANTED'
+                                ? 'green'
+                                : user.isAdmin == 'DENIED'
+                                ? 'RED'
+                                : 'orange'
+                            "
+                          >
+                            {{ user.isAdmin }}
+                            <i
+                              *ngIf="
+                                user.isAdmin == 'PENDING' ||
+                                user.isAdmin == 'DENIED'
+                              "
+                              class="bi-person-check-fill"
+                              (click)="
+                                updateGrantAdminAccess(
+                                  user._id,
+                                  'GRANTED',
+                                  user.emailId
+                                )
+                              "
+                            ></i>
+                            <i
+                              *ngIf="
+                                user.isAdmin == 'PENDING' ||
+                                user.isAdmin == 'GRANTED'
+                              "
+                              class="bi-x-square-fill"
+                              (click)="
+                                updateGrantAdminAccess(
+                                  user._id,
+                                  'DENIED',
                                   user.emailId
                                 )
                               "

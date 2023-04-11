@@ -32,7 +32,7 @@ export class UserService {
           sessionStorage.setItem('isAuthenticated', 'true');
           sessionStorage.setItem(
             'isAdmin',
-            loginData.userName == 'admin' ? 'true' : 'false'
+            data.user.isAdmin == 'GRANTED' ? 'true' : 'false'
           );
           sessionStorage.setItem('userId', data.user._id);
         } else sessionStorage.setItem('isAuthenticated', 'false');

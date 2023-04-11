@@ -564,7 +564,7 @@ h5,
 
 .bi-x-square-fill::before {
   color: red !important;
-  margin-left: 15% !important;
+  /* margin-left: 15% !important; */
   font-size: 16px !important;
 }
 
@@ -659,4 +659,15 @@ a {
 
 .accordion-item {
   margin-top: 10px !important;
+}
+
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }

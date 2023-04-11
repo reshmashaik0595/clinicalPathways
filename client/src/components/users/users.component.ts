@@ -104,4 +104,58 @@ export class UsersComponent {
       this.spinnerService.hide();
     }
   }
+
+  updateGrantAdminAccess(id: any, grantAdminAccess: any, emailId: any) {
+    this.spinnerService.show();
+    try {
+      const query = `_id=${id}`;
+      const body = { isAdmin: grantAdminAccess, emailId: emailId };
+      this.userService.updateUser(query, body).subscribe(
+        (response: any) => {
+          this.onComponentLoad = false;
+          this.header = 'Success';
+          this.message = `Admin access '${grantAdminAccess}' successful`;
+          this.className = 'alert alert-success';
+
+          // Email alert fadeout after 5 secs
+          swal.fire({
+            text: response.emailSent
+              ? `Email has been sent to user on admin privileges status saying '${grantAdminAccess}'. Thank you!`
+              : `Email failed to send on admin privileges status saying '${grantAdminAccess}'. Please contact administrator for more details.`,
+            icon: response.emailSent ? 'success' : 'error',
+            showConfirmButton: false,
+            timer: 5000,
+          });
+
+          // Reset state after 8 secs
+          setTimeout(() => {
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+          }, 8000);
+
+          this.getUserByQuery();
+          this.spinnerService.hide();
+        },
+        (err: any) => {
+          console.error(
+            `Error [approvalStatusUpdate]:  , ${JSON.stringify(err.error)}`
+          );
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
+          this.spinnerService.hide();
+        }
+      );
+    } catch (err: any) {
+      console.error(`Error [approvalStatusUpdate]:  , ${JSON.stringify(err)}`);
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
+      this.spinnerService.hide();
+    }
+  }
 }

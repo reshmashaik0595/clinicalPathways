@@ -10,7 +10,13 @@ const createUsers = async (req, res) => {
         console.log(`User created succesfully, ${JSON.stringify(result)}`);
 
         //Send Email 
+        const _result = await userCrud.getByQuery({ isAdmin: 'GRANTED' })
+        if (!_result.length)
+            return res.status(404).send({ message: MESSAGE.USER_READ.FAILED, body: `${MESSAGE.INVALID_QUERY}: ${JSON.stringify(req.query)}` })
+
+        req.body[0]['emailIdList'] = _result.map(res => res.emailId);
         req.body[0]['reqOnReviewApprovalStatus'] = true;
+
         const isEmailSent = await emailService.sendMail(req.body[0])
         console.log(`isEmailSent: ${isEmailSent.emailSent}`);
         if (isEmailSent) emailSent = isEmailSent.emailSent;
@@ -50,6 +56,11 @@ const updateUser = async (req, res) => {
             req.body['reqOnUpdateApprovalStatus'] = true;
         }
 
+        if (req.body['isAdmin']) { // Approve Status
+            console.log("Request coming for grant/deny admin access!")
+            req.body['reqOnGrantAdminAccess'] = true;
+        }
+
         if (req.query['userName']) { //Password Reset
             console.log("Request coming for password reset!")
             req.body['reqOnPasswordReset'] = true;
@@ -57,12 +68,14 @@ const updateUser = async (req, res) => {
             req.body['password'] = req.query.userName.substring(0, 4) + "@123";
         }
 
+        req.body['emailIdList'] = _result[0].emailId;
+        
         const result = await userCrud.update(req.query ? req.query : {}, req.body)
         console.log(`User updated succesfully, ${JSON.stringify(result)}`);
 
         //Send Email if Approve/Reject or passwordReset
         var emailSent = false;
-        if (req.body['reqOnUpdateApprovalStatus'] || req.query['userName']) {
+        if (req.body['reqOnUpdateApprovalStatus'] || req.query['userName'] || req.body['reqOnGrantAdminAccess']) {
             console.log("Email require to send!")
             const isEmailSent = await emailService.sendMail(req.body)
             console.log(`isEmailSent: ${isEmailSent.emailSent}`);

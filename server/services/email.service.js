@@ -20,13 +20,16 @@ const sendMail = async (req) => {
     let data, subject
     if (req.reqOnReviewApprovalStatus) {
       data = fs.readFileSync('./config/adminApprovalEmailTemplate.html', 'utf8')
-      subject = 'New Request has been sent for your approval!'
+      subject = 'New request has been sent for your approval!'
     } else if (req.reqOnPasswordReset) {
       data = fs.readFileSync('./config/passwordResetEmailTemplate.html', 'utf8')
-      subject = `Your Password has been reset!`
+      subject = `Your password has been reset!`
     } else if (req.reqOnUpdateApprovalStatus) {
       data = fs.readFileSync('./config/userApprovalStatusEmailTemplate.html', 'utf8')
-      subject = `Your Request has been ${req.approvalStatus} by admin!`
+      subject = `Your request has been ${req.approvalStatus} by admin!`
+    } else if (req.reqOnGrantAdminAccess) {
+      data = fs.readFileSync('./config/userGrantAdminAccessEmailTemplate.html', 'utf8')
+      subject = `Your have been ${req.isAdmin} as "Admin" privileges by admin!`
     } else {
       console.error(`Failed to send mail!!`)
       return { emailSent: false }
@@ -42,11 +45,12 @@ const sendMail = async (req) => {
     data = data.replaceAll('#appURL', EMAIL.APPLICATION_URL)
     data = data.replaceAll('#approvalStatus', req.approvalStatus)
     data = data.replaceAll('#resetPassword', req.password)
+    data = data.replaceAll('#isAdmin', req.isAdmin)
     // console.log(`HTML replaced data, ${data}`);
 
     const mailOptions = {
       from: EMAIL.DONOT_REPLY_EMAIL_ID,
-      to: req.emailForReview ? EMAIL.ADMIN_EMAIL_ID : req.emailId,
+      to: req.emailIdList,
       subject,
       html: data
     }

@@ -47,6 +47,12 @@ const UserSchema = mongoose.Schema({
         required: true,
         enum: ['Doctor', 'Nurse Practioner', 'Admin'],
     },
+    isAdmin: {
+        type: String,
+        required: true,
+        enum: ['DENIED', 'GRANTED', 'PENDING'],
+        default: "PENDING"
+    },
     govtIDNumber: {
         type: String,
         required: true

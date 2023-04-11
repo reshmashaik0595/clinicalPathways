@@ -62,12 +62,11 @@ const MESSAGE = {
 }
 
 const EMAIL = {
-    DONOT_REPLY_EMAIL_ID: 'reshmashaik0595@gmail.com', // To be updated later
-    ADMIN_EMAIL_ID: 'reshmashaik0595@gmail.com', // To be updated later
-    AUTH_EMAIL_ID: 'reshmashaik0595@gmail.com', // To be updated later
-    AUTH_APP_PASSWORD: 'rmemexmoogwfhqeq', // To be updated later
+    DONOT_REPLY_EMAIL_ID: 'familydoctor2002@gmail.com', // To be updated later
+    AUTH_EMAIL_ID: 'familydoctor2002@gmail.com', // To be updated later
+    AUTH_APP_PASSWORD: 'blcwwczvnqbgovcl', // To be updated later
     EMAIL_SERVICE: 'gmail',
-    APPLICATION_URL: 'http://localhost:4200' // To be updated later
+    APPLICATION_URL: 'http://147.182.152.183/' // To be updated later
 }
 
 const ADMIN_DEFAULT_DATA = {
@@ -79,7 +78,8 @@ const ADMIN_DEFAULT_DATA = {
     designation: 'Admin',
     govtIDNumber: "admin",
     approvalStatus: "APPROVED",
-    mobile: '0000000000'
+    mobile: '0000000000',
+    isAdmin: 'GRANTED'
 }
 
 const ON_LOAD_FEEDBACK_QUESTIONS = [
@@ -95,11 +95,11 @@ const ON_LOAD_FEEDBACK_QUESTIONS = [
 
 const ON_LOAD_PATHWAYS = [
     {
-        "pathway": "Smoking Cessation",
+        "pathway": "Smoking-Cessation",
         "visible": true
     },
     {
-        "pathway": "Simplified Dental Pain",
+        "pathway": "Simplified-Dental-Pain",
         "visible": true
     }
 ]
