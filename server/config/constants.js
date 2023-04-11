@@ -71,14 +71,14 @@ const EMAIL = {
 
 const ADMIN_DEFAULT_DATA = {
     firstName: 'Admin',
-    lastName: 'Name',
+    lastName: 'Admin',
     userName: 'admin',
     password: 'Admin@123',
     emailId: 'familydoctor2002@gmail.com',
     designation: 'Admin',
     govtIDNumber: "admin",
     approvalStatus: "APPROVED",
-    mobile: '0000000000',
+    mobile: '9999999999',
     isAdmin: 'GRANTED'
 }
 
