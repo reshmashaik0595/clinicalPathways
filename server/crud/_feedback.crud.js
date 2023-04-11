@@ -1,10 +1,10 @@
-const Feedback = require('../models/_feedback')
+const Feedback = require('../models/feedback')
 
 // Create an new feedBack
 const post = async (feedbacks) => {
     try {
         const result = await Feedback.insertMany(feedbacks)
-        console.log(`Feedbacks created succesfully, ${JSON.stringify(result)}`)
+        console.log(`>Feedbacks created succesfully, ${JSON.stringify(result)}`)
         return result
     } catch (err) {
         console.error(`Failed to create usefeedbacks, ${err}`)
