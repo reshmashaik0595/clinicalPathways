@@ -320,7 +320,7 @@
         </h1>
       </div>
       <div class="modal-body">
-        <form [formGroup]="loginForm" *ngIf="!isForgetPassword">
+        <form [formGroup]="loginForm" *ngIf="!isForgotPassword">
           <div class="row g-3">
             <div class="col-xl-12">
               <input
@@ -388,13 +388,13 @@
             </div>
             <a
               class="btn btn-link btn-floating mx-1"
-              (click)="onForgetPasswordSelection()"
-              >Forget Password <i class="fa fa-question-circle"></i
+              (click)="onForgotPasswordSelection()"
+              >Forgot Password <i class="fa fa-question-circle"></i
             ></a>
           </div>
         </form>
 
-        <form [formGroup]="forgetPasswordForm" *ngIf="isForgetPassword">
+        <form [formGroup]="forgotPasswordForm" *ngIf="isForgotPassword">
           <div class="row g-3">
             <div class="col-xl-12">
               <input
@@ -405,17 +405,17 @@
                 formControlName="userName"
                 [ngClass]="{
                   'input-error':
-                    (forgetPasswordForm.get('userName')?.dirty ||
-                      forgetPasswordForm.get('userName')?.touched) &&
-                    forgetPasswordForm.get('userName')?.invalid
+                    (forgotPasswordForm.get('userName')?.dirty ||
+                      forgotPasswordForm.get('userName')?.touched) &&
+                    forgotPasswordForm.get('userName')?.invalid
                 }"
               />
               <span
                 class="text-danger"
                 *ngIf="
-                  (forgetPasswordForm.get('userName')?.dirty ||
-                    forgetPasswordForm.get('userName')?.touched) &&
-                  forgetPasswordForm.get('userName')!.invalid
+                  (forgotPasswordForm.get('userName')?.dirty ||
+                    forgotPasswordForm.get('userName')?.touched) &&
+                  forgotPasswordForm.get('userName')!.invalid
                 "
                 >Username must meet validation criteria.
               </span>
@@ -429,11 +429,11 @@
             </div>
             <div class="col-12">
               <button
-                (click)="forgetPassword()"
+                (click)="forgotPassword()"
                 class="btn btn-dark w-100 py-3"
-                [disabled]="forgetPasswordForm.invalid"
+                [disabled]="forgotPasswordForm.invalid"
               >
-                <span> Forget Password</span>
+                <span> Forgot Password</span>
               </button>
             </div>
             <a

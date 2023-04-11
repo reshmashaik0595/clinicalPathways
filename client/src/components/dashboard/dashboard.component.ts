@@ -18,7 +18,7 @@ export class DashboardComponent {
     private userService: UserService
   ) {}
 
-  isForgetPassword: boolean = false;
+  isForgotPassword: boolean = false;
   userId: any = '';
 
   loginForm = new FormGroup({
@@ -30,7 +30,7 @@ export class DashboardComponent {
     password: new FormControl(null, [Validators.required]),
   });
 
-  forgetPasswordForm = new FormGroup({
+  forgotPasswordForm = new FormGroup({
     userName: new FormControl(null, [
       Validators.required,
       Validators.minLength(3),
@@ -203,14 +203,14 @@ export class DashboardComponent {
     }
   }
 
-  onForgetPasswordSelection() {
+  onForgotPasswordSelection() {
     this.className = '';
     this.onComponentLoad = true;
     this.header = null;
     this.message = null;
     this.loginForm.reset();
-    this.forgetPasswordForm.reset();
-    this.isForgetPassword = true;
+    this.forgotPasswordForm.reset();
+    this.isForgotPassword = true;
   }
 
   onBackToLoginSelection() {
@@ -219,17 +219,17 @@ export class DashboardComponent {
     this.header = null;
     this.message = null;
     this.loginForm.reset();
-    this.forgetPasswordForm.reset();
-    this.isForgetPassword = false;
+    this.forgotPasswordForm.reset();
+    this.isForgotPassword = false;
   }
 
-  forgetPassword() {
+  forgotPassword() {
     try {
       this.spinnerService.show();
       const query = `userName=${
-        this.forgetPasswordForm.get('userName')?.value
+        this.forgotPasswordForm.get('userName')?.value
       }`;
-      this.userService.forgetPassword(query).subscribe(
+      this.userService.forgotPassword(query).subscribe(
         (response: any) => {
           this.onComponentLoad = false;
           this.className = 'alert alert-success';
@@ -242,8 +242,8 @@ export class DashboardComponent {
             this.header = null;
             this.message = null;
             this.loginForm.reset();
-            this.forgetPasswordForm.reset();
-            this.isForgetPassword = false;
+            this.forgotPasswordForm.reset();
+            this.isForgotPassword = false;
           }, 3000);
 
           swal.fire({
@@ -259,7 +259,7 @@ export class DashboardComponent {
         },
         (err: any) => {
           console.error(
-            `Error [Forget-Password]:  , ${JSON.stringify(err.error)}`
+            `Error [Forgot-Password]:  , ${JSON.stringify(err.error)}`
           );
           this.onComponentLoad = false;
           this.className = 'alert alert-danger';
@@ -269,7 +269,7 @@ export class DashboardComponent {
         }
       );
     } catch (err: any) {
-      console.error(`Error [Forget-Password]:  , ${JSON.stringify(err)}`);
+      console.error(`Error [Forgot-Password]:  , ${JSON.stringify(err)}`);
       this.onComponentLoad = false;
       this.className = 'alert alert-danger';
       this.header = 'Error';
@@ -279,10 +279,10 @@ export class DashboardComponent {
   }
 
   resetModal() {
-    this.isForgetPassword = false;
+    this.isForgotPassword = false;
     this.loginForm.reset();
     this.signUpForm.reset();
-    this.forgetPasswordForm.reset();
+    this.forgotPasswordForm.reset();
     this.onLoad = true;
   }
 }

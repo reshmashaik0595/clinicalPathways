@@ -46,7 +46,7 @@ export class UserService {
     return this.http.put(url.domainurl + `users?${query}`, userData);
   }
 
-  forgetPassword(query: any): Observable<any> {
+  forgotPassword(query: any): Observable<any> {
     console.log(`userData: ${JSON.stringify(query)}`);
     return this.http.put(url.domainurl + `users?${query}`, {});
   }
