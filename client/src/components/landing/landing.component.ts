@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { NgxLoaderSpinnerService } from 'ngx-loader-spinner';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PathwayService } from 'src/services/pathways.service';
 declare var $: any;
 
 @Component({
@@ -12,7 +13,8 @@ declare var $: any;
 export class LandingComponent {
   constructor(
     private feedbackService: FeedbackService,
-    private spinnerService: NgxLoaderSpinnerService
+    private spinnerService: NgxLoaderSpinnerService,
+    private pathwayService: PathwayService
   ) {}
 
   questionsList: any = [];
@@ -25,7 +27,7 @@ export class LandingComponent {
 
   ngOnInit() {
     this.getFeedbackByQuery();
-    this.getPathways();
+    this.getPathwaysByQuery();
   }
 
   getFeedbackByQuery() {
@@ -96,8 +98,24 @@ export class LandingComponent {
     this.feedbackForm.get('pathway' + i)?.updateValueAndValidity();
   }
 
-  getPathways() {
-    this.pathways = ['TEST1', 'UIP'];
+  getPathwaysByQuery() {
+    this.spinnerService.show();
+    try {
+      this.pathwayService.getPathwaybyQuery(`visible=true`).subscribe(
+        (response: any) => {
+          console.log(`Pathway Data: ${JSON.stringify(response)}`);
+          this.pathways = response.body;
+          this.spinnerService.hide();
+        },
+        (err: any) => {
+          console.error(`Error [getPathway]:  , ${JSON.stringify(err.error)}`);
+          this.spinnerService.hide();
+        }
+      );
+    } catch (err: any) {
+      console.error(`Error [getPathway]:  , ${JSON.stringify(err)}`);
+      this.spinnerService.hide();
+    }
   }
 
   postComments() {
@@ -163,7 +181,7 @@ export class LandingComponent {
     return array;
   }
 
-  resetModal(){
+  resetModal() {
     this.ngOnInit();
   }
 }
