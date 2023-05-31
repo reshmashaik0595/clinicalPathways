@@ -26,4 +26,9 @@ export class PathwayService {
     console.log(`pathway Q: ${JSON.stringify(query)}`);
     return this.http.delete(url.domainurl + `pathways?${query}`);
   }
+
+  updatePathway(query: any, pathway: any): Observable<any> {
+    console.log(`pathwayData: ${JSON.stringify(pathway)}`);
+    return this.http.put(url.domainurl + `pathways?${query}`, pathway);
+  }
 }

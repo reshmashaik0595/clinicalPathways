@@ -81,7 +81,7 @@ const Pathway = require('./models/pathway')
 async function pathwayCreation() {
     const pathwayObj = ON_LOAD_PATHWAYS
     pathwayObj.forEach(async element => {
-        const pathway = await Pathway.find(element);
+        const pathway = await Pathway.find({ pathway: element.pathway });
         if (pathway.length) return
         const newPathway = new Pathway(element)
         const result = await newPathway.save() // Create a pathway

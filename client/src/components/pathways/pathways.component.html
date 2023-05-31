@@ -1,3 +1,4 @@
+<ngx-loader-spinner></ngx-loader-spinner>
 <div class="container-fluid">
   <div class="row">
     <app-sidebar></app-sidebar>
@@ -9,7 +10,7 @@
           class="jumbotron jumbotron-fluid rounded bg-white border-0 shadow-sm border-left px-4"
         >
           <div class="container">
-            <!-- <button
+            <button
               class="btn btn-dark w-5 pull-right"
               type="submit"
               data-bs-toggle="modal"
@@ -17,7 +18,7 @@
               (click)="resetModal()"
             >
               Add Pathway
-            </button> -->
+            </button>
             <div [ngClass]="className" *ngIf="!onComponentLoad">
               <span
                 >{{ header ? header : "Error" }}!
@@ -32,7 +33,7 @@
             >
               <a
                 *ngFor="let pathway of pathwaysList"
-                (click)="selectTab = pathway.pathway"
+                (click)="selectTab = pathway.pathway; onTabSelect()"
                 [ngClass]="
                   selectTab == pathway.pathway
                     ? 'active-tab'
@@ -40,15 +41,15 @@
                 "
               >
                 {{ pathway.pathway }}
-                <!-- <span
+                <span
                   *ngIf="pathwaysList.length > 1"
                   class="fa fa-trash"
                   title="delete"
                   (click)="deletePathway(pathway.pathway)"
-                ></span> -->
+                ></span>
               </a>
             </div>
-            <!-- <div *ngFor="let pathway of pathwaysList">
+            <div *ngFor="let pathway of pathwaysList">
               <div class="container" *ngIf="selectTab == pathway.pathway">
                 <button
                   class="btn btn-sm btn-add btn-dark pull-right"
@@ -63,41 +64,104 @@
                 >
                   {{ pathway.heading }}
                 </h1>
+                <div [formGroup]="pathwayForm">
+                  <div
+                    formArrayName="accordians"
+                    *ngFor="
+                      let acc of pathwayForm.controls.accordians.controls;
+                      let i = index
+                    "
+                  >
+                    <div [formGroupName]="i" class="accGroup">
+                      <br />
+                      <button
+                        class="btn btn-add btn-sm btn-dark"
+                        type="submit"
+                        (click)="addSubAccordian(i)"
+                      >
+                        + Add Sub Accordian
+                      </button>
+                      <br />
+                      <br />
+                      <input
+                        class="form-control bg-light border-0"
+                        formControlName="accordianName"
+                        placeholder="Accordian name"
+                      />
+                      <br />
+                      <textarea
+                        rows="5"
+                        class="form-control bg-light border-0"
+                        formControlName="accordianContent"
+                        placeholder="AccordianContent"
+                      ></textarea>
+                      <div
+                        formArrayName="subAccordians"
+                        *ngFor="
+                          let subAcc of this.pathwayForm.controls.accordians
+                            .controls[i]['controls']['subAccordians'][
+                            'controls'
+                          ];
+                          let j = index
+                        "
+                      >
+                        <div [formGroupName]="j" class="subAccGroup">
+                          <br />
+                          <!-- <button
+                            class="btn btn-add btn-sm btn-dark pull-right"
+                            type="submit"
+                          >
+                            + Add
+                          </button> -->
+                          <br />
+                          <br />
+                          <input
+                            class="form-control bg-light border-0"
+                            formControlName="accordianName"
+                            placeholder="Accordian name"
+                          />
+                          <br />
+                          <textarea
+                            rows="5"
+                            class="form-control bg-light border-0"
+                            formControlName="accordianContent"
+                            placeholder="AccordianContent"
+                          ></textarea>
 
-                <div
-                  formArrayName="accordians"
-                  *ngFor="let accordian of getControls(); let i = index"
-                >
-                  <div [formGroupName]="i" class="accGroup">
-                    <br />
-                    <br />
-                    <input
-                      class="form-control bg-light border-0"
-                      formControlName="accordianName"
-                      placeholder="Accordian name"
-                    />
-                    <br />
-                    <textarea
-                      rows="5"
-                      class="form-control bg-light border-0"
-                      formControlName="accordianContent"
-                      placeholder="AccordianContent"
-                    ></textarea>
-                    <button
-                      class="btn btn-delete btn-sm btn-dark pull-right"
-                      type="submit"
-                      (click)="deleteAccordian(i)"
-                    >
-                      - Delete Accordian
-                    </button>
+                          <button
+                            class="btn btn-delete btn-sm btn-dark pull-right"
+                            type="submit"
+                            (click)="deleteSubAccordian(i, j)"
+                          >
+                            - Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        class="btn btn-delete btn-sm btn-dark"
+                        type="submit"
+                        (click)="deleteAccordian(i)"
+                        *ngIf="
+                          pathwayForm.controls.accordians.controls.length > 1
+                        "
+                      >
+                        - Delete Accordian
+                      </button>
+                    </div>
                   </div>
+                  <button
+                    class="btn btn-save btn-dark w-5"
+                    type="submit"
+                    (click)="updatePathway()"
+                    *ngIf="pathwayForm.controls.accordians.controls.length > 0"
+                  >
+                    Update Accordians
+                  </button>
                 </div>
-                <button class="btn btn-save btn-dark w-5" type="submit">
-                  Save Accordians
-                </button>
               </div>
-            </div> -->
-
+            </div>
+            <!-- 
             <div
               class="container"
               *ngIf="selectTab == 'Simplified-Dental-Pain'"
@@ -122,7 +186,7 @@
                     </h2>
                     <div
                       [id]="'child1Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child1Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -151,7 +215,7 @@
                             </h2>
                             <div
                               [id]="'child1child1coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child1child1hea'"
                               data-bs-parent="#child1Acc"
                             >
@@ -186,7 +250,7 @@
                             </h2>
                             <div
                               [id]="'child1child2coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child1child2hea'"
                               data-bs-parent="#child1Acc"
                             >
@@ -229,7 +293,7 @@
                             </h2>
                             <div
                               [id]="'child1child3coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child1child3hea'"
                               data-bs-parent="#child1Acc"
                             >
@@ -288,7 +352,7 @@
                     </h2>
                     <div
                       [id]="'child2Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child2Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -317,7 +381,7 @@
                             </h2>
                             <div
                               [id]="'child2child1Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child2child1Hea'"
                               data-bs-parent="#child2Acc"
                             >
@@ -371,7 +435,7 @@
                             </h2>
                             <div
                               [id]="'child2child2Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child2child2Hea'"
                               data-bs-parent="#child2Acc"
                             >
@@ -452,7 +516,7 @@
                     </h2>
                     <div
                       [id]="'child3Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child3Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -476,7 +540,7 @@
                             </h2>
                             <div
                               [id]="'child3child1Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child3child1Hea'"
                               data-bs-parent="#child3Acc"
                             >
@@ -520,7 +584,7 @@
                             </h2>
                             <div
                               [id]="'child3child2Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child3child2Hea'"
                               data-bs-parent="#child3Acc"
                             >
@@ -553,7 +617,7 @@
                             </h2>
                             <div
                               [id]="'child3child3Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child3child3Hea'"
                               data-bs-parent="#child3Acc"
                             >
@@ -595,7 +659,7 @@
                             </h2>
                             <div
                               [id]="'child3child4Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child3child4Hea'"
                               data-bs-parent="#child3Acc"
                             >
@@ -629,7 +693,7 @@
                                     </h2>
                                     <div
                                       [id]="'child3child4child1Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child3child4child1Hea'
                                       "
@@ -679,7 +743,7 @@
                                     </h2>
                                     <div
                                       [id]="'child3child4child2Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child3child4child2Hea'
                                       "
@@ -721,7 +785,7 @@
                                     </h2>
                                     <div
                                       [id]="'child3child4child3Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child3child4child3Hea'
                                       "
@@ -767,7 +831,7 @@
                                     </h2>
                                     <div
                                       [id]="'child3child4child4Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child3child4child4Hea'
                                       "
@@ -814,7 +878,7 @@
                                     </h2>
                                     <div
                                       [id]="'child3child4child5Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child3child4child5Hea'
                                       "
@@ -875,7 +939,7 @@
                     </h2>
                     <div
                       [id]="'child4Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child4Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -930,7 +994,7 @@
                     </h2>
                     <div
                       [id]="'child5Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child5Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -944,8 +1008,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
+            <!--
             <div class="container" *ngIf="selectTab == 'Smoking-Cessation'">
               <h1 class="display-4 mb-2 text-primary" style="font-size: 1.5rem">
                 Smoking Cessation
@@ -967,7 +1032,7 @@
                     </h2>
                     <div
                       [id]="'child1Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child1Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -991,7 +1056,7 @@
                             </h2>
                             <div
                               [id]="'child1child1coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child1child1hea'"
                               data-bs-parent="#child1Acc"
                             >
@@ -1022,7 +1087,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child1Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child1Hea'
                                       "
@@ -1072,7 +1137,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child2Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child2Hea'
                                       "
@@ -1111,7 +1176,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child3Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child3Hea'
                                       "
@@ -1162,7 +1227,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child4Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child4Hea'
                                       "
@@ -1214,7 +1279,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child5Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child5Hea'
                                       "
@@ -1250,7 +1315,7 @@
                                     </h2>
                                     <div
                                       [id]="'child1child1child6Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child1child1child6Hea'
                                       "
@@ -1295,7 +1360,7 @@
                             </h2>
                             <div
                               [id]="'child1child2coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child1child2hea'"
                               data-bs-parent="#child1Acc"
                             >
@@ -1337,7 +1402,7 @@
                     </h2>
                     <div
                       [id]="'child2Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child2Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -1368,7 +1433,7 @@
                             </h2>
                             <div
                               [id]="'child2child1Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child2child1Hea'"
                               data-bs-parent="#child2Acc"
                             >
@@ -1458,7 +1523,7 @@
                             </h2>
                             <div
                               [id]="'child2child2Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="'child2child2Hea'"
                               data-bs-parent="#child2Acc"
                             >
@@ -1486,7 +1551,7 @@
                                     </h2>
                                     <div
                                       [id]="'child2child2child1Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child2child2child1Hea'
                                       "
@@ -1548,7 +1613,7 @@
                                               [id]="
                                                 'child2child2child1child1Coll'
                                               "
-                                              class="accordion-collapse collapse show"
+                                              class="accordion-collapse collapse"
                                               [attr.aria-labelledby]="
                                                 'child2child2child1child1Hea'
                                               "
@@ -1668,7 +1733,7 @@
                                               [id]="
                                                 'child2child2child1child2Coll'
                                               "
-                                              class="accordion-collapse collapse show"
+                                              class="accordion-collapse collapse"
                                               [attr.aria-labelledby]="
                                                 'child2child2child1child2Hea'
                                               "
@@ -1741,7 +1806,7 @@
                                               [id]="
                                                 'child2child2child1child3Coll'
                                               "
-                                              class="accordion-collapse collapse show"
+                                              class="accordion-collapse collapse"
                                               [attr.aria-labelledby]="
                                                 'child2child2child1child3Hea'
                                               "
@@ -1816,7 +1881,7 @@
                                               [id]="
                                                 'child2child2child1child4Coll'
                                               "
-                                              class="accordion-collapse collapse show"
+                                              class="accordion-collapse collapse"
                                               [attr.aria-labelledby]="
                                                 'child2child2child1child4Hea'
                                               "
@@ -1873,7 +1938,7 @@
                                     </h2>
                                     <div
                                       [id]="'child2child2child2Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child2child2child2Hea'
                                       "
@@ -1939,7 +2004,7 @@
                                     </h2>
                                     <div
                                       [id]="'child2child2child3Coll'"
-                                      class="accordion-collapse collapse show"
+                                      class="accordion-collapse collapse"
                                       [attr.aria-labelledby]="
                                         'child2child2child3Hea'
                                       "
@@ -2014,7 +2079,7 @@
                             </h2>
                             <div
                               [id]="'child2child3Coll'"
-                              class="accordion-collapse collapse show"
+                              class="accordion-collapse collapse"
                               [attr.aria-labelledby]="
                                 'child2child2child1child4Hea'
                               "
@@ -2056,7 +2121,7 @@
                     </h2>
                     <div
                       [id]="'child3Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child3Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -2116,7 +2181,7 @@
                     </h2>
                     <div
                       [id]="'child4Coll'"
-                      class="accordion-collapse collapse show"
+                      class="accordion-collapse collapse"
                       [attr.aria-labelledby]="'child4Hea'"
                       data-bs-parent="#parentAcc"
                     >
@@ -2130,7 +2195,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </main>
@@ -2169,7 +2234,6 @@
                 {{ message ? message : "Internal Server Error." }}.</span
               >
             </div>
-            {{ pathwayForm.invalid }}
             <button
               class="btn btn-dark w-5 pull-right"
               type="submit"

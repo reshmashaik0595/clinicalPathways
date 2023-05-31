@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var Schema = mongoose.Schema;
 
 // Pathway schema
 const pathwaySchema = mongoose.Schema({
@@ -14,6 +15,9 @@ const pathwaySchema = mongoose.Schema({
     visible: {
         type: Boolean,
         default: true
+    },
+    accordians: {
+        type: Schema.Types.Mixed,
     },
     createdAt: {
         type: Date,

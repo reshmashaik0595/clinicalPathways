@@ -19,4 +19,5 @@ export class FeedbackService {
     console.log(`feedBack Obj: ${JSON.stringify(feedBackObj)}`);
     return this.http.post(url.domainurl + `feedbacks/comments`, feedBackObj);
   }
+
 }
