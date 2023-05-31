@@ -342,6 +342,18 @@ h6,
   transition: 0.5s;
 }
 
+.btn-delete {
+  background-color: rgb(248, 68, 68) !important;
+  border-color: rgb(248, 68, 68) !important;
+  color: white;
+  font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-add {
+  font-size: 10px !important;
+}
 .service-item .service-icon {
   margin-bottom: 30px;
   width: 60px;
@@ -525,6 +537,11 @@ h6,
   justify-content: center !important;
 }
 
+.btn-save {
+  margin-top: 10px !important;
+  float: left !important;
+}
+
 .dashboard {
   margin-left: 20% !important;
   margin-top: 5% !important;
@@ -552,8 +569,16 @@ h5,
 
 .px-4 {
   padding-top: 1.5rem !important;
-  padding-bottom: 1.5rem !important;
+  padding-bottom: 3.5rem !important;
   text-align: justify;
+}
+
+.accGroup {
+  background-color: white !important;
+  padding: 0px 30px 40px 30px !important;
+  margin-top: 20px !important;
+  border: 2px solid !important;
+  border-color: #34b9c3 !important;
 }
 
 .bi {
@@ -568,9 +593,20 @@ h5,
   font-size: 16px !important;
 }
 
+.row > input {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
 .bi-person-check-fill::before {
   color: green !important;
   font-size: 16px !important;
+}
+
+.bg-light {
+  border: 1px solid !important;
+  border-color: #34b9c3 !important;
+  padding: 5px 5px 5px 5px !important;
 }
 
 .input-error {
@@ -693,7 +729,7 @@ a {
   padding-bottom: 10px !important;
 }
 
-._nav-link{
+._nav-link {
   font-size: 150% !important;
   background-color: #e6f6fb !important;
   color: #34b9c3 !important;
@@ -708,4 +744,3 @@ a {
   margin-bottom: 0.2% !important;
   padding-bottom: 10px !important;
 }
-

@@ -7,9 +7,13 @@ const pathwaySchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    heading: {
+        type: String,
+        required: true
+    },
     visible: {
         type: Boolean,
-        default: false
+        default: true
     },
     createdAt: {
         type: Date,

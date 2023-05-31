@@ -4,7 +4,7 @@ const pathwayCrud = require('../crud/pathway.crud')
 // Create an new pathway
 const createPathway = async (req, res) => {
     try {
-
+        console.log(JSON.stringify(req.body))
         const result = await pathwayCrud.post(req.body)
         console.log(`Pathway created succesfully, ${JSON.stringify(result)}`);
 
