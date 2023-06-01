@@ -18,6 +18,7 @@ const pathwaySchema = mongoose.Schema({
     },
     accordians: {
         type: Schema.Types.Mixed,
+        default: []
     },
     createdAt: {
         type: Date,

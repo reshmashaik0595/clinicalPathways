@@ -37,6 +37,10 @@ export class PathwaysComponent {
   className: string = '';
   accordians: any = FormArray;
   subAccordians: any = FormArray;
+  subSubAccordians: any = FormArray;
+  isEditMode: any = false;
+  AddUpdateValue: any = 'Add';
+  currentPathwayId: any = '';
 
   pathwayForm = new FormGroup({
     pathway: new FormControl(null, Validators.required),
@@ -58,7 +62,9 @@ export class PathwaysComponent {
     this.getPathwaysByQuery();
   }
 
-  onTabSelect() {
+  onTabSelect(tabName: any) {
+    this.selectTab = tabName;
+    this.isEditMode = false;
     this.pathwayForm = new FormGroup({
       pathway: new FormControl(null, Validators.required),
       heading: new FormControl(null, Validators.required),
@@ -72,11 +78,35 @@ export class PathwaysComponent {
     this.accordians.push(this.createAccordians());
   }
 
-  addSubAccordian(j: any): void {
-    this.subAccordians = this.pathwayForm.controls.accordians.controls[j][
+  setPathwayDataToModal(index: any, tabName: any) {
+    this.currentPathwayId = this.pathwaysList[index]?._id;
+    this.onTabSelect(tabName);
+    this.AddUpdateValue = 'Update';
+    $('#pathwayModal').modal('show');
+  }
+
+  addSubAccordian(i: any): void {
+    console.log(
+      this.pathwayForm.controls.accordians.controls[i]['controls'][
+        'subAccordians'
+      ]
+    );
+    this.subAccordians = this.pathwayForm.controls.accordians.controls[i][
       'controls'
     ]['subAccordians'] as FormArray;
     this.subAccordians.push(this.createAccordians());
+  }
+
+  addSubSubAccordian(i: any, j: any): void {
+    console.log(
+      this.pathwayForm.controls.accordians.controls[i]['controls'][
+        'subAccordians'
+      ]['controls'][j]['controls']['subAccordians']
+    );
+    this.subSubAccordians = this.pathwayForm.controls.accordians.controls[i][
+      'controls'
+    ]['subAccordians']['controls'][j]['controls']['subAccordians'] as FormArray;
+    this.subSubAccordians.push(this.createAccordians());
   }
 
   getPathwaysByQuery() {
@@ -86,9 +116,10 @@ export class PathwaysComponent {
         (response: any) => {
           console.log(`Pathway Data: ${JSON.stringify(response)}`);
           this.pathwaysList = response.body;
-          this.selectTab = this.pathwaysList[0].pathway;
-          this.setFormControls();
-          this.onTabSelect()
+          this.selectTab = this.selectTab
+            ? this.selectTab
+            : this.pathwaysList[0].pathway;
+          this.onTabSelect(this.selectTab);
           this.spinnerService.hide();
         },
         (err: any) => {
@@ -151,9 +182,10 @@ export class PathwaysComponent {
             this.header = null;
             this.message = null;
             $('#pathwayModal').modal('hide');
-            this.ngOnInit();
-            this.deleteAccordian(0);
           }, 1500);
+          this.selectTab = this.pathwayForm.get('pathway')?.value;
+          this.ngOnInit();
+          this.deleteAccordian(0);
           console.log(`Pathway Data: ${JSON.stringify(response)}`);
           this.spinnerService.hide();
         },
@@ -185,7 +217,6 @@ export class PathwaysComponent {
           this.className = 'alert alert-success';
           this.header = 'Success';
           this.message = response.message;
-
           setTimeout(() => {
             this.className = '';
             this.onComponentLoad = true;
@@ -193,6 +224,7 @@ export class PathwaysComponent {
             this.message = null;
           }, 1500);
           console.log(`Delete Pathway Data: ${JSON.stringify(response)}`);
+          this.selectTab = '';
           this.ngOnInit();
           this.spinnerService.hide();
         },
@@ -234,6 +266,13 @@ export class PathwaysComponent {
     control.removeAt(j);
   }
 
+  deleteSubSubAccordian(i: any, j: any, k: any) {
+    const control = this.pathwayForm.controls.accordians.controls[i][
+      'controls'
+    ]['subAccordians']['controls'][j]['controls']['subAccordians'] as FormArray;
+    control.removeAt(k);
+  }
+
   updatePathway() {
     this.spinnerService.show();
     try {
@@ -254,6 +293,8 @@ export class PathwaysComponent {
             this.header = null;
             this.message = null;
           }, 1500);
+          this.getPathwaysByQuery();
+          this.isEditMode = false;
           console.log(`Pathway Update Data: ${JSON.stringify(response)}`);
           this.spinnerService.hide();
         },
@@ -278,11 +319,59 @@ export class PathwaysComponent {
     }
   }
 
+  editPathway() {
+    this.spinnerService.show();
+    try {
+      let query = `_id=${this.currentPathwayId}`;
+      let pathwayObj: any = {
+        pathway: this.pathwayForm.get('pathway')?.value,
+        heading: this.pathwayForm.get('heading')?.value,
+      };
+      this.pathwayService.editPathway(query, pathwayObj).subscribe(
+        (response: any) => {
+          this.onComponentLoad = false;
+          this.className = 'alert alert-success';
+          this.header = 'Success';
+          this.message = response.message;
+
+          setTimeout(() => {
+            this.className = '';
+            this.onComponentLoad = true;
+            this.header = null;
+            this.message = null;
+            $('#pathwayModal').modal('hide');
+          }, 1500);
+          this.getPathwaysByQuery();
+          console.log(`Pathway EDIT Data: ${JSON.stringify(response)}`);
+          this.spinnerService.hide();
+        },
+        (err: any) => {
+          console.error(
+            `Error [EDIT Pathway]:  , ${JSON.stringify(err.error)}`
+          );
+          this.onComponentLoad = false;
+          this.className = 'alert alert-danger';
+          this.header = 'Error';
+          this.message = err.error.body;
+          this.spinnerService.hide();
+        }
+      );
+    } catch (err: any) {
+      console.error(`Error [EDIT Pathway]:  , ${JSON.stringify(err)}`);
+      this.onComponentLoad = false;
+      this.className = 'alert alert-danger';
+      this.header = 'Error';
+      this.message = err.error.body;
+      this.spinnerService.hide();
+    }
+  }
+
   setFormControls() {
     let index = this.pathwaysList.findIndex(
       (el: any) => el.pathway === this.selectTab
     );
-    if (this.pathwaysList[index].accordians?.length > 0)
+    this.pathwayForm.patchValue(this.pathwaysList[index]);
+    if (this.pathwaysList[index]?.accordians?.length > 0)
       this.pathwaysList[index].accordians.forEach((element: any, i: any) => {
         this.addAccordian();
         const _control = this.pathwayForm.controls.accordians.controls[
@@ -302,6 +391,17 @@ export class PathwaysComponent {
               'controls'
             ]['subAccordians']['controls'][j] as FormControl;
             control.patchValue(_element);
+
+            if (_element.subAccordians?.length > 0)
+              _element.subAccordians.forEach((__element: any, k: any) => {
+                this.addSubSubAccordian(i, j);
+                const control = this.pathwayForm.controls.accordians.controls[
+                  i
+                ]['controls']['subAccordians']['controls'][j]['controls'][
+                  'subAccordians'
+                ]['controls'][k] as FormControl;
+                control.patchValue(__element);
+              });
           });
       });
   }

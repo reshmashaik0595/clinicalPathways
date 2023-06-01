@@ -353,7 +353,18 @@ h6,
 
 .btn-add {
   font-size: 10px !important;
+  background-color: #25a948 !important;
+  border-color: #25a948 !important  ;
 }
+
+.table > thead {
+  background-color: #dddddd !important;
+}
+
+.table > tbody {
+  background-color: #e6f6fb !important;
+}
+
 .service-item .service-icon {
   margin-bottom: 30px;
   width: 60px;
@@ -567,15 +578,13 @@ h5,
   color: white !important;
 }
 
-
-
 .px-4 {
   padding-top: 1.5rem !important;
   padding-bottom: 3.5rem !important;
   text-align: justify;
 }
 
-.accGroup {
+.accGroup, .subSubAccGroup {
   background-color: white !important;
   padding: 0px 30px 40px 30px !important;
   margin-top: 20px !important;

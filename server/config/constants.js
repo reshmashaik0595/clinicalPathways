@@ -96,12 +96,12 @@ const ON_LOAD_FEEDBACK_QUESTIONS = [
 const ON_LOAD_PATHWAYS = [
     {
         "pathway": "Smoking-Cessation",
-        "heading": "TEST",
+        "heading": "Smoking-Cessation",
         "visible": true
     },
     {
         "pathway": "Simplified-Dental-Pain",
-        "heading": "TEST1",
+        "heading": "Simplified-Dental-Pain",
         "visible": true
     }
 ]

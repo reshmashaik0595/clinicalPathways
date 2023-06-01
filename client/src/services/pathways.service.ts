@@ -31,4 +31,9 @@ export class PathwayService {
     console.log(`pathwayData: ${JSON.stringify(pathway)}`);
     return this.http.put(url.domainurl + `pathways?${query}`, pathway);
   }
+
+  editPathway(query: any, pathway: any): Observable<any> {
+    console.log(`pathwayData: ${JSON.stringify(pathway)}`);
+    return this.http.put(url.domainurl + `pathways?${query}`, pathway);
+  }
 }
