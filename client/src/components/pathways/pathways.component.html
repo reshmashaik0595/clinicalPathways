@@ -112,131 +112,104 @@
                         data-bs-parent="#parentAcc"
                       >
                         <div class="accordion-body">
-                          <div class="accordion" id="child'+ia+'Acc">
+                          <div class="accordion">
                             {{ acc.accordianContent }}
 
-                            <div
-                              class="accordion-item"
-                              *ngFor="
-                                let subAcc of acc.subAccordians;
-                                let isa = index
-                              "
-                            >
-                              <h2
-                                class="accordion-header"
-                                [id]="'child' + ia + 'child' + isa + 'hea'"
+                            <div class="accordion" id="parentSubAcc">
+                              <div
+                                class="accordion-item"
+                                *ngFor="
+                                  let subAcc of acc.subAccordians;
+                                  let isa = index
+                                "
                               >
-                                <button
-                                  class="accordion-button"
-                                  type="button"
-                                  data-bs-toggle="collapse"
-                                  [attr.data-bs-target]="
-                                    '#child' + ia + 'child' + isa + 'coll'
-                                  "
-                                  aria-expanded="true"
-                                  [attr.aria-controls]="
-                                    'child' + ia + 'child' + isa + 'coll'
-                                  "
+                                <h2
+                                  class="accordion-header"
+                                  [id]="'child' + ia + isa + 'Hea'"
                                 >
-                                  {{ subAcc.accordianName }}
-                                </button>
-                              </h2>
-                              <div
-                                [id]="'child' + ia + 'child' + isa + 'coll'"
-                                class="accordion-collapse collapse show"
-                                [attr.aria-labelledby]="
-                                  'child' + ia + 'child' + isa + 'hea'
-                                "
-                                data-bs-parent="#child'+ia+'Acc"
-                              >
-                                <div class="accordion-body">
-                                  {{ subAcc.accordianContent }}
-                                </div>
-                              </div>
-
-                              <div
-                                [id]="'child' + ia + 'child' + isa + 'coll'"
-                                class="accordion-collapse collapse show"
-                                [attr.aria-labelledby]="
-                                  'child' + ia + 'child' + isa + 'hea'
-                                "
-                                data-bs-parent="#child'+ia+'Acc"
-                              >
-                                <div class="accordion-body">
-                                  <div
-                                    class="accordion"
-                                    id="child'+ia+'child'+isa+'Acc"
+                                  <button
+                                    class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="
+                                      '#child' + ia + isa + 'Coll'
+                                    "
+                                    aria-expanded="true"
+                                    [attr.aria-controls]="
+                                      'child' + ia + isa + 'Coll'
+                                    "
                                   >
-                                    <div
-                                      class="accordion-item"
-                                      *ngFor="
-                                        let subSubAcc of subAcc.subAccordians;
-                                        let issa = index
-                                      "
-                                    >
-                                      <h2
-                                        class="accordion-header"
-                                        [id]="
-                                          'child' +
-                                          ia +
-                                          'child' +
-                                          isa +
-                                          'child' +
-                                          issa +
-                                          'Hea'
-                                        "
+                                    {{ subAcc.accordianName }}
+                                  </button>
+                                </h2>
+                                <div
+                                  [id]="'child' + ia + isa + 'Coll'"
+                                  class="accordion-collapse collapse show"
+                                  [attr.aria-labelledby]="
+                                    'child' + ia + isa + 'Hea'
+                                  "
+                                  data-bs-parent="#parentSubAcc"
+                                >
+                                  <div class="accordion-body">
+                                    <div class="accordion">
+                                      {{ subAcc.accordianContent }}
+
+                                      <div
+                                        class="accordion"
+                                        id="parentSubSubAcc"
                                       >
-                                        <button
-                                          class="accordion-button"
-                                          type="button"
-                                          data-bs-toggle="collapse"
-                                          [attr.data-bs-target]="
-                                            '#child' +
-                                            ia +
-                                            'child' +
-                                            isa +
-                                            'child' +
-                                            issa +
-                                            'Coll'
-                                          "
-                                          aria-expanded="true"
-                                          [attr.aria-controls]="
-                                            'child' +
-                                            ia +
-                                            'child' +
-                                            isa +
-                                            'child' +
-                                            issa +
-                                            'Coll'
+                                        <div
+                                          class="accordion-item"
+                                          *ngFor="
+                                            let subsubAcc of subAcc.subAccordians;
+                                            let issa = index
                                           "
                                         >
-                                          {{ subSubAcc.accordianName }}
-                                        </button>
-                                      </h2>
-                                      <div
-                                        [id]="
-                                          'child' +
-                                          ia +
-                                          'child' +
-                                          isa +
-                                          'child' +
-                                          issa +
-                                          'Coll'
-                                        "
-                                        class="accordion-collapse collapse show"
-                                        [attr.aria-labelledby]="
-                                          'child' +
-                                          ia +
-                                          'child' +
-                                          isa +
-                                          'child' +
-                                          issa +
-                                          'Hea'
-                                        "
-                                        data-bs-parent="#child'+ia+'child'+isa+'child'+issa+'Acc"
-                                      >
-                                        <div class="accordion-body">
-                                          {{ subSubAcc.accordianContent }}
+                                          <h2
+                                            class="accordion-header"
+                                            [id]="
+                                              'child' + ia + isa + issa + 'Hea'
+                                            "
+                                          >
+                                            <button
+                                              class="accordion-button"
+                                              type="button"
+                                              data-bs-toggle="collapse"
+                                              [attr.data-bs-target]="
+                                                '#child' +
+                                                ia +
+                                                isa +
+                                                issa +
+                                                'Coll'
+                                              "
+                                              aria-expanded="true"
+                                              [attr.aria-controls]="
+                                                'child' +
+                                                ia +
+                                                isa +
+                                                issa +
+                                                'Coll'
+                                              "
+                                            >
+                                              {{ subsubAcc.accordianName }}
+                                            </button>
+                                          </h2>
+                                          <div
+                                            [id]="
+                                              'child' + ia + isa + issa + 'Coll'
+                                            "
+                                            class="accordion-collapse collapse show"
+                                            [attr.aria-labelledby]="
+                                              'child' + ia + isa + issa + 'Hea'
+                                            "
+                                            data-bs-parent="#parentSubSubAcc"
+                                          >
+                                            <div class="accordion-body">
+                                              <div class="accordion">
+                                                {{ subsubAcc.accordianContent }}
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
