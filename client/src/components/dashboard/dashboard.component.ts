@@ -22,19 +22,23 @@ export class DashboardComponent {
   userId: any = '';
 
   loginForm = new FormGroup({
-    userName: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
-    ]),
+    _user: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
   });
 
   forgotPasswordForm = new FormGroup({
-    userName: new FormControl(null, [
+    _user: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
+      Validators.pattern(
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+      ),
+    ]),
+    confirmPassword: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+      ),
     ]),
   });
 
@@ -88,6 +92,7 @@ export class DashboardComponent {
   onComponentLoad: boolean = true;
   onLoad: boolean = true;
   samePassword: boolean = true;
+  _samePassword: boolean = true;
 
   isLoggedIn =
     sessionStorage.getItem('isAuthenticated') == 'true' ? true : false;
@@ -104,6 +109,21 @@ export class DashboardComponent {
     else {
       this.signUpForm.get('confirmPassword')?.setErrors({ incorrect: true });
       this.samePassword = false;
+    }
+  }
+
+  _comparePassword() {
+    this.onLoad = false;
+    if (
+      this.forgotPasswordForm.get('password')?.value ==
+      this.forgotPasswordForm.get('confirmPassword')?.value
+    )
+      this._samePassword = true;
+    else {
+      this.forgotPasswordForm
+        .get('confirmPassword')
+        ?.setErrors({ incorrect: true });
+      this._samePassword = false;
     }
   }
 
@@ -226,10 +246,13 @@ export class DashboardComponent {
   forgotPassword() {
     try {
       this.spinnerService.show();
-      const query = `userName=${
-        this.forgotPasswordForm.get('userName')?.value
-      }`;
-      this.userService.forgotPassword(query).subscribe(
+      const __user = this.forgotPasswordForm.get('_user')?.value;
+      // const query = `{$or: [{userName: '${__user}'},{emailId: '${__user}'}]}`;
+      const query = `__user=${__user}`;
+      let body = {
+        password: this.forgotPasswordForm.get('password')?.value,
+      };
+      this.userService.forgotPassword(query, body).subscribe(
         (response: any) => {
           this.onComponentLoad = false;
           this.className = 'alert alert-success';

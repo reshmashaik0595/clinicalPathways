@@ -326,24 +326,24 @@
               <input
                 type="text"
                 class="form-control bg-light border-0"
-                placeholder="Username *"
+                placeholder="Username / Email Id *"
                 style="height: 55px"
-                formControlName="userName"
+                formControlName="_user"
                 [ngClass]="{
                   'input-error':
-                    (loginForm.get('userName')?.dirty ||
-                      loginForm.get('userName')?.touched) &&
-                    loginForm.get('userName')?.invalid
+                    (loginForm.get('_user')?.dirty ||
+                      loginForm.get('_user')?.touched) &&
+                    loginForm.get('_user')?.invalid
                 }"
               />
               <span
                 class="text-danger"
                 *ngIf="
-                  (loginForm.get('userName')?.dirty ||
-                    loginForm.get('userName')?.touched) &&
-                  loginForm.get('userName')!.invalid
+                  (loginForm.get('_user')?.dirty ||
+                    loginForm.get('_user')?.touched) &&
+                  loginForm.get('_user')!.invalid
                 "
-                >Username must meet validation criteria.
+                >Username / Email Id must meet validation criteria.
               </span>
             </div>
             <div class="col-12">
@@ -400,25 +400,79 @@
               <input
                 type="text"
                 class="form-control bg-light border-0"
-                placeholder="Username *"
+                placeholder="Username / Email Id *"
                 style="height: 55px"
-                formControlName="userName"
+                formControlName="_user"
                 [ngClass]="{
                   'input-error':
-                    (forgotPasswordForm.get('userName')?.dirty ||
-                      forgotPasswordForm.get('userName')?.touched) &&
-                    forgotPasswordForm.get('userName')?.invalid
+                    (forgotPasswordForm.get('_user')?.dirty ||
+                      forgotPasswordForm.get('_user')?.touched) &&
+                    forgotPasswordForm.get('_user')?.invalid
                 }"
               />
               <span
                 class="text-danger"
                 *ngIf="
-                  (forgotPasswordForm.get('userName')?.dirty ||
-                    forgotPasswordForm.get('userName')?.touched) &&
-                  forgotPasswordForm.get('userName')!.invalid
+                  (forgotPasswordForm.get('_user')?.dirty ||
+                    forgotPasswordForm.get('_user')?.touched) &&
+                  forgotPasswordForm.get('_user')!.invalid
                 "
-                >Username must meet validation criteria.
+                >Username / Email Id must meet validation criteria.
               </span>
+            </div>
+            <div class="col-12">
+              <input
+                type="password"
+                class="form-control bg-light border-0"
+                placeholder="Password *"
+                style="height: 55px"
+                formControlName="password"
+                [ngClass]="{
+                  'input-error':
+                    (forgotPasswordForm.get('password')?.dirty ||
+                      forgotPasswordForm.get('password')?.touched) &&
+                    forgotPasswordForm.get('password')?.invalid
+                }"
+                (keyup)="onLoad ? null : comparePassword()"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  (forgotPasswordForm.get('password')?.dirty ||
+                    forgotPasswordForm.get('password')?.touched) &&
+                  forgotPasswordForm.get('password')!.invalid
+                "
+                >Password must meet validation criteria.
+              </span>
+            </div>
+            <div class="col-xl-12">
+              <input
+                type="password"
+                class="form-control bg-light border-0"
+                placeholder="Confirm Password *"
+                style="height: 55px"
+                formControlName="confirmPassword"
+                [ngClass]="{
+                  'input-error':
+                    (forgotPasswordForm.get('confirmPassword')?.dirty ||
+                      forgotPasswordForm.get('confirmPassword')?.touched) &&
+                    forgotPasswordForm.get('confirmPassword')?.invalid
+                }"
+                (keyup)="_comparePassword()"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  (forgotPasswordForm.get('confirmPassword')?.dirty ||
+                    forgotPasswordForm.get('confirmPassword')?.touched) &&
+                  forgotPasswordForm.get('confirmPassword')!.invalid
+                "
+                >Confirm Password must meet validation criteria.
+              </span>
+              <br />
+              <span class="text-danger" *ngIf="!_samePassword"
+                >Your password and confirm password do not match.</span
+              >
             </div>
 
             <div [ngClass]="className" *ngIf="!onComponentLoad">

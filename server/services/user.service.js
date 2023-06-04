@@ -47,9 +47,22 @@ const getByQuery = async (req, res) => {
 // Update an user by id
 const updateUser = async (req, res) => {
     try {
-        const _result = await userCrud.getByQuery(req.query ? req.query : {})
-        if (!_result.length) return res.status(404).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${MESSAGE.INVALID_USER}` })
+        let _result;
+        if (req.body['password']) {  //Prepare query for Password Reset
+            // Check for username
+            _result = await userCrud.getByQuery({ userName: req.query.__user })
+            if (!_result.length) {
+                // Check for emailId
+                _result = await userCrud.getByQuery({ emailId: req.query.__user });
+                if (!_result.length)
+                    return res.status(404).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${MESSAGE.INVALID_USER} ` })
+            }
+        }
 
+        else {
+            _result = await userCrud.getByQuery(req.query ? req.query : {})
+            if (!_result.length) return res.status(404).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${MESSAGE.INVALID_USER} ` })
+        }
 
         if (req.body['approvalStatus']) { // Approve Status
             console.log("Request coming for approve status!")
@@ -61,31 +74,30 @@ const updateUser = async (req, res) => {
             req.body['reqOnGrantAdminAccess'] = true;
         }
 
-        if (req.query['userName']) { //Password Reset
+        if (req.body['password']) { //Password Reset
             console.log("Request coming for password reset!")
             req.body['reqOnPasswordReset'] = true;
             req.body['emailId'] = _result[0].emailId;
-            req.body['password'] = req.query.userName.substring(0, 4) + "@123";
         }
 
         req.body['emailIdList'] = _result[0].emailId;
-        
+
         const result = await userCrud.update(req.query ? req.query : {}, req.body)
-        console.log(`User updated succesfully, ${JSON.stringify(result)}`);
+        console.log(`User updated succesfully, ${JSON.stringify(result)} `);
 
         //Send Email if Approve/Reject or passwordReset
         var emailSent = false;
-        if (req.body['reqOnUpdateApprovalStatus'] || req.query['userName'] || req.body['reqOnGrantAdminAccess']) {
+        if (req.body['reqOnUpdateApprovalStatus'] || req.body['reqOnPasswordReset'] || req.body['reqOnGrantAdminAccess']) {
             console.log("Email require to send!")
             const isEmailSent = await emailService.sendMail(req.body)
-            console.log(`isEmailSent: ${isEmailSent.emailSent}`);
+            console.log(`isEmailSent: ${isEmailSent.emailSent} `);
             if (isEmailSent) emailSent = isEmailSent.emailSent;
         } else console.log("Email not require to send!")
 
         return res.send({ message: MESSAGE.USER_UDPATE.SUCCESS, body: null, emailSent: emailSent ? emailSent : false })
     } catch (err) {
-        console.error(`Failed to create user, ${err}`)
-        return res.status(500).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${err}` })
+        console.error(`Failed to create user, ${err} `)
+        return res.status(500).send({ message: MESSAGE.USER_UDPATE.FAILED, body: `${err} ` })
     }
 }
 
