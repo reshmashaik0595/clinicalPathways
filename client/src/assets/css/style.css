@@ -357,6 +357,12 @@ h6,
   border-color: #25a948 !important  ;
 }
 
+.btn-back {
+  font-size: 10px !important;
+  background-color: #ff9500 !important;
+  border-color: #ff9500 !important  ;
+}
+
 .table > thead {
   background-color: #dddddd !important;
 }

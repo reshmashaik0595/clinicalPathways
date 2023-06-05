@@ -17,6 +17,8 @@ const userRoute = require('./routes/user.route')
 const authRoute = require('./routes/auth.route')
 const feedbackRoute = require('./routes/feedback.route')
 const pathwayRoute = require('./routes/pathway.route')
+const pathwayAuditRoute = require('./routes/pathway.audit.route')
+
 
 
 // Connect to mongodb
@@ -43,6 +45,8 @@ app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute)
 app.use('/api/feedbacks', feedbackRoute)
 app.use('/api/pathways', pathwayRoute)
+app.use('/api/pathwaysAudit', pathwayAuditRoute)
+
 
 // Test API
 app.get('/', (req, res) => {
@@ -78,13 +82,14 @@ feedBackCreation();
 
 
 const Pathway = require('./models/pathway')
+
 async function pathwayCreation() {
     const pathwayObj = ON_LOAD_PATHWAYS
     pathwayObj.forEach(async element => {
         const pathway = await Pathway.find({ pathway: element.pathway });
         if (pathway.length) return
         const newPathway = new Pathway(element)
-        const result = await newPathway.save() // Create a pathway
+        const result = await newPathway.save()
         result ? console.log('Pathway created succesfully') : console.error('Failed to create pathway')
     });
 }

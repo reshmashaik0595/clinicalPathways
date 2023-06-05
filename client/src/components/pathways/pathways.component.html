@@ -6,19 +6,39 @@
       <!-- main content -->
 
       <main class="container-fluid dashboard">
+        <button
+          class="btn btn-sm btn-back btn-dark"
+          type="submit"
+          *ngIf="currentView && switchDataView"
+          (click)="getPathwaysAuditByQuery(); currentView = false"
+        >
+          <span class="fa fa-backward"></span> Switch to Previous DataView
+        </button>
+
         <div
           class="jumbotron jumbotron-fluid rounded bg-white border-0 shadow-sm border-left px-4"
         >
           <div class="container">
+            <button
+              class="btn btn-sm btn-back btn-dark pull-right"
+              type="submit"
+              *ngIf="!currentView"
+              (click)="getPathwaysByQuery(); currentView = true"
+            >
+              Switch to Current DataView <span class="fa fa-refresh"></span>
+            </button>
+
             <button
               class="btn btn-dark w-5 pull-right"
               type="submit"
               data-bs-toggle="modal"
               data-bs-target="#pathwayModal"
               (click)="resetModal()"
+              *ngIf="currentView"
             >
               Add Pathway
             </button>
+
             <div [ngClass]="className" *ngIf="!onComponentLoad">
               <span
                 >{{ header ? header : "Error" }}!
@@ -33,7 +53,10 @@
             >
               <a
                 *ngFor="let pathway of pathwaysList; let _p = index"
-                (click)="selectTab = pathway.pathway"
+                (click)="
+                  selectTab = pathway.pathway;
+                  currentView ? getPathwaysByQuery() : getPathwaysAuditByQuery
+                "
                 [ngClass]="
                   selectTab == pathway.pathway
                     ? 'active-tab'
@@ -41,6 +64,7 @@
                 "
               >
                 <span
+                  *ngIf="currentView"
                   class="fa fa-edit"
                   title="edit"
                   (click)="setPathwayDataToModal(_p, pathway.pathway)"
@@ -50,7 +74,7 @@
                 }}</span>
 
                 <span
-                  *ngIf="pathwaysList.length > 1"
+                  *ngIf="pathwaysList.length > 1 && currentView"
                   class="fa fa-trash"
                   title="delete"
                   (click)="deletePathway(pathway.pathway)"
@@ -66,7 +90,7 @@
                   class="btn btn-sm btn-add btn-dark pull-right"
                   type="submit"
                   (click)="isEditMode = true"
-                  *ngIf="pathway.accordians.length > 0"
+                  *ngIf="pathway.accordians.length > 0 && currentView"
                 >
                   Edit Accordian
                 </button>
@@ -75,7 +99,7 @@
                   class="btn btn-sm btn-add btn-dark pull-right"
                   type="submit"
                   (click)="addAccordian(); isEditMode = true"
-                  *ngIf="pathway.accordians.length == 0"
+                  *ngIf="pathway.accordians.length == 0 && currentView"
                 >
                   + Add Accordian
                 </button>

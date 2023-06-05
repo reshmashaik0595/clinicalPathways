@@ -20,6 +20,7 @@ export class DashboardComponent {
 
   isForgotPassword: boolean = false;
   userId: any = '';
+  showDummyPassword: any = false;
 
   loginForm = new FormGroup({
     _user: new FormControl(null, [Validators.required]),
@@ -147,7 +148,6 @@ export class DashboardComponent {
             this.loginForm.reset();
             this.router.navigate(['/inner-dashboard']);
           }, 1500);
-
           this.spinnerService.hide();
         },
         (err: any) => {
@@ -156,6 +156,7 @@ export class DashboardComponent {
           this.className = 'alert alert-danger';
           this.header = 'Error';
           this.message = err.error.body;
+          this.showDummyPassword = false;
           this.spinnerService.hide();
         }
       );
@@ -165,6 +166,7 @@ export class DashboardComponent {
       this.className = 'alert alert-danger';
       this.header = 'Error';
       this.message = err.error.body;
+      this.showDummyPassword = false;
       this.spinnerService.hide();
     }
   }

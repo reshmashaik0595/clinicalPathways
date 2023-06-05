@@ -2,10 +2,13 @@ const mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 // Pathway schema
-const pathwaySchema = mongoose.Schema({
+const pathwayAuditSchema = mongoose.Schema({
     dataUpdated: {
         type: Boolean,
         default: false
+    },
+    __pId: {
+        type: String
     },
     pathway: {
         type: String,
@@ -36,11 +39,11 @@ const pathwaySchema = mongoose.Schema({
 })
 
 // Udpate the updateddate before updating to db
-pathwaySchema.pre('updateMany', function (next) {
-    const pathway = this.getUpdate()
+pathwayAuditSchema.pre('updateMany', function (next) {
+    const pathwayAudit = this.getUpdate()
     // UpdatedAt
-    pathway.updatedAt = new Date()
+    pathwayAudit.updatedAt = new Date()
     next()
 })
 
-module.exports = mongoose.model('Pathway', pathwaySchema)
+module.exports = mongoose.model('PathwayAudit', pathwayAuditSchema)

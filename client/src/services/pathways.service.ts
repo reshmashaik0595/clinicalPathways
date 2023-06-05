@@ -15,6 +15,11 @@ export class PathwayService {
     return this.http.get(url.domainurl + `pathways?${query}`);
   }
 
+  getPathwayAuditbyQuery(query: any): Observable<any> {
+    console.log(`pathway Q: ${JSON.stringify(query)}`);
+    return this.http.get(url.domainurl + `pathwaysAudit?${query}`);
+  }
+
   // Post a pathwayQ
   addPathway(pathwayObj: any): Observable<any> {
     console.log(`pathway Q: ${JSON.stringify(pathwayObj)}`);

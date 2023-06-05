@@ -41,6 +41,8 @@ export class PathwaysComponent {
   isEditMode: any = false;
   AddUpdateValue: any = 'Add';
   currentPathwayId: any = '';
+  currentView: any = true;
+  switchDataView: any = false;
 
   pathwayForm = new FormGroup({
     pathway: new FormControl(null, Validators.required),
@@ -110,12 +112,52 @@ export class PathwaysComponent {
   }
 
   getPathwaysByQuery() {
+    this.pathwaysList = [];
     this.spinnerService.show();
     try {
       this.pathwayService.getPathwaybyQuery(`visible=true`).subscribe(
         (response: any) => {
           console.log(`Pathway Data: ${JSON.stringify(response)}`);
           this.pathwaysList = response.body;
+          for (let i = 0; i < this.pathwaysList.length; i++) {
+            if (this.pathwaysList[i].dataUpdated) {
+              this.switchDataView = true;
+              break;
+            } else continue;
+          }
+          let index = this.pathwaysList.findIndex(
+            (el: any) => el.pathway == this.selectTab
+          );
+          if (index == -1) this.selectTab = '';
+          this.selectTab = this.selectTab
+            ? this.selectTab
+            : this.pathwaysList[0].pathway;
+          this.onTabSelect(this.selectTab);
+          this.spinnerService.hide();
+        },
+        (err: any) => {
+          console.error(`Error [getPathway]:  , ${JSON.stringify(err.error)}`);
+          this.spinnerService.hide();
+        }
+      );
+    } catch (err: any) {
+      console.error(`Error [getPathway]:  , ${JSON.stringify(err)}`);
+      this.spinnerService.hide();
+    }
+  }
+
+  getPathwaysAuditByQuery() {
+    this.pathwaysList = [];
+    this.spinnerService.show();
+    try {
+      this.pathwayService.getPathwayAuditbyQuery(`visible=true`).subscribe(
+        (response: any) => {
+          console.log(`Pathway Audit Data: ${JSON.stringify(response)}`);
+          this.pathwaysList = response.body;
+          let index = this.pathwaysList.findIndex(
+            (el: any) => el.pathway == this.selectTab
+          );
+          if (index == -1) this.selectTab = '';
           this.selectTab = this.selectTab
             ? this.selectTab
             : this.pathwaysList[0].pathway;
@@ -278,6 +320,7 @@ export class PathwaysComponent {
     try {
       let query = `pathway=${this.selectTab}`;
       let pathwayObj: any = {
+        updatedData: true,
         accordians: this.pathwayForm.controls['accordians'].value,
       };
       this.pathwayService.updatePathway(query, pathwayObj).subscribe(
@@ -324,6 +367,7 @@ export class PathwaysComponent {
     try {
       let query = `_id=${this.currentPathwayId}`;
       let pathwayObj: any = {
+        updatedData: true,
         pathway: this.pathwayForm.get('pathway')?.value,
         heading: this.pathwayForm.get('heading')?.value,
       };
@@ -341,6 +385,7 @@ export class PathwaysComponent {
             this.message = null;
             $('#pathwayModal').modal('hide');
           }, 1500);
+          this.selectTab = this.pathwayForm.get('pathway')?.value;
           this.getPathwaysByQuery();
           console.log(`Pathway EDIT Data: ${JSON.stringify(response)}`);
           this.spinnerService.hide();

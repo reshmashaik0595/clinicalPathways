@@ -346,7 +346,7 @@
                 >Username / Email Id must meet validation criteria.
               </span>
             </div>
-            <div class="col-12">
+            <div class="col-12" *ngIf="!showDummyPassword">
               <input
                 type="password"
                 placeholder="Password *"
@@ -371,6 +371,15 @@
               </span>
             </div>
 
+            <div class="col-12" *ngIf="showDummyPassword">
+              <input
+                type="password"
+                placeholder="***********************************************************************************************************************"
+                class="form-control bg-light border-0"
+                style="height: 55px"
+              />
+            </div>
+
             <div [ngClass]="className" *ngIf="!onComponentLoad">
               <span
                 >{{ header ? header : "Error" }}!
@@ -379,7 +388,7 @@
             </div>
             <div class="col-12">
               <button
-                (click)="login()"
+                (click)="login(); showDummyPassword = true"
                 class="btn btn-dark w-100 py-3"
                 [disabled]="loginForm.invalid"
               >
