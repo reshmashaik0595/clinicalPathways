@@ -4,7 +4,7 @@ const SERVER = {
 }
 
 const MESSAGE = {
-    INVALID_USER: "User / EmailId not found",
+    INVALID_USER: "User / Email ID not found",
     INVALID_QUERY: "Invalid Query",
     USER_CREATE: {
         SUCCESS: 'User(s) created successfully',
@@ -56,7 +56,7 @@ const MESSAGE = {
         INVALID_PASSWORD: 'Invalid password (or) Please enter a valid password',
         APPROVAL_STATUS_REJECT: 'Your approval status is "REJECTED" in state. Please contact administator for more details.',
         APPROVAL_STATUS_PENDING: 'Your approval status is "PENDING" in state. Please contact administator for more details.',
-        INVALID_USER_NAME: 'Invalid username / emailId (or) Please enter a valid username / emailId'
+        INVALID_USER_NAME: 'Invalid username / Email ID (or) Please enter a valid username / Email ID'
     },
 
 }

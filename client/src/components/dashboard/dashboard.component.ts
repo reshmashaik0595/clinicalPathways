@@ -273,8 +273,8 @@ export class DashboardComponent {
 
           swal.fire({
             text: response.emailSent
-              ? 'Reset Password has been sent to your registered emailId. Thank You!'
-              : 'Reset Password failed to send to your registered emailId. Please contact administrator for more details.',
+              ? 'Reset Password has been sent to your registered Email ID. Thank You!'
+              : 'Reset Password failed to send to your registered Email ID. Please contact administrator for more details.',
             icon: response.emailSent ? 'success' : 'error',
             showConfirmButton: false,
             timer: 4500,
