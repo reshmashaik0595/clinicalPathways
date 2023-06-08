@@ -78,6 +78,7 @@ const updateUser = async (req, res) => {
             console.log("Request coming for password reset!")
             req.body['reqOnPasswordReset'] = true;
             req.body['emailId'] = _result[0].emailId;
+            req.query = { _id: _result[0]._id }
         }
 
         req.body['emailIdList'] = _result[0].emailId;
