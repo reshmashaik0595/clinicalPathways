@@ -9,7 +9,7 @@
         <button
           class="btn btn-sm btn-back btn-dark"
           type="submit"
-          *ngIf="currentView && switchDataView"
+          *ngIf="currentView && switchDataView && isAdmin == 'true'"
           (click)="getPathwaysAuditByQuery(); currentView = false"
         >
           <span class="fa fa-backward"></span> Switch to Previous DataView
@@ -22,7 +22,7 @@
             <button
               class="btn btn-sm btn-back btn-dark pull-right"
               type="submit"
-              *ngIf="!currentView"
+              *ngIf="!currentView && isAdmin == 'true'"
               (click)="getPathwaysByQuery(); currentView = true"
             >
               Switch to Current DataView <span class="fa fa-refresh"></span>
@@ -34,7 +34,7 @@
               data-bs-toggle="modal"
               data-bs-target="#pathwayModal"
               (click)="resetModal()"
-              *ngIf="currentView"
+              *ngIf="currentView && isAdmin == 'true'"
             >
               Add Pathway
             </button>
@@ -64,7 +64,7 @@
                 "
               >
                 <span
-                  *ngIf="currentView"
+                  *ngIf="currentView && isAdmin == 'true'"
                   class="fa fa-edit"
                   title="edit"
                   (click)="setPathwayDataToModal(_p, pathway.pathway)"
@@ -74,7 +74,9 @@
                 }}</span>
 
                 <span
-                  *ngIf="pathwaysList.length > 1 && currentView"
+                  *ngIf="
+                    pathwaysList.length > 1 && currentView && isAdmin == 'true'
+                  "
                   class="fa fa-trash"
                   title="delete"
                   (click)="deletePathway(pathway.pathway)"
@@ -90,7 +92,11 @@
                   class="btn btn-sm btn-add btn-dark pull-right"
                   type="submit"
                   (click)="isEditMode = true"
-                  *ngIf="pathway.accordians.length > 0 && currentView"
+                  *ngIf="
+                    pathway.accordians.length > 0 &&
+                    currentView &&
+                    isAdmin == 'true'
+                  "
                 >
                   Edit Accordian
                 </button>
@@ -99,7 +105,11 @@
                   class="btn btn-sm btn-add btn-dark pull-right"
                   type="submit"
                   (click)="addAccordian(); isEditMode = true"
-                  *ngIf="pathway.accordians.length == 0 && currentView"
+                  *ngIf="
+                    pathway.accordians.length == 0 &&
+                    currentView &&
+                    isAdmin == 'true'
+                  "
                 >
                   + Add Accordian
                 </button>
