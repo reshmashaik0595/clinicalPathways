@@ -89,6 +89,19 @@
                 *ngIf="selectTab == pathway.pathway && !isEditMode"
               >
                 <button
+                  style="margin-left: 10px"
+                  class="btn btn-sm btn-back btn-dark pull-right"
+                  type="submit"
+                  (click)="_collapseClass()"
+                  *ngIf="
+                    pathway.accordians.length > 0 &&
+                    currentView &&
+                    isAdmin == 'true'
+                  "
+                >
+                  Collapse/Expand Accordian <span class="fa fa-expand"></span>
+                </button>
+                <button
                   class="btn btn-sm btn-add btn-dark pull-right"
                   type="submit"
                   (click)="isEditMode = true"
@@ -141,7 +154,7 @@
                       </h2>
                       <div
                         [id]="'child' + ia + 'Coll'"
-                        class="accordion-collapse collapse show"
+                        [ngClass]="collapseClass"
                         [attr.aria-labelledby]="'child' + ia + 'Hea'"
                         data-bs-parent="#parentAcc"
                       >
@@ -178,7 +191,7 @@
                                 </h2>
                                 <div
                                   [id]="'child' + ia + isa + 'Coll'"
-                                  class="accordion-collapse collapse show"
+                                  [ngClass]="collapseClass"
                                   [attr.aria-labelledby]="
                                     'child' + ia + isa + 'Hea'
                                   "
@@ -232,7 +245,7 @@
                                             [id]="
                                               'child' + ia + isa + issa + 'Coll'
                                             "
-                                            class="accordion-collapse collapse show"
+                                            [ngClass]="collapseClass"
                                             [attr.aria-labelledby]="
                                               'child' + ia + isa + issa + 'Hea'
                                             "

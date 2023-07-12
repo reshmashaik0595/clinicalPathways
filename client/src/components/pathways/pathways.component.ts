@@ -43,6 +43,7 @@ export class PathwaysComponent {
   currentPathwayId: any = '';
   currentView: any = true;
   switchDataView: any = false;
+  collapseClass: any = 'accordion-collapse collapse hide';
 
   pathwayForm = new FormGroup({
     pathway: new FormControl(null, Validators.required),
@@ -62,6 +63,13 @@ export class PathwaysComponent {
     this.currentPage = encodeURI(this.router.url);
     this.getUserByQuery();
     this.getPathwaysByQuery();
+  }
+
+  _collapseClass() {
+    this.collapseClass =
+      this.collapseClass == 'accordion-collapse collapse hide'
+        ? 'accordion-collapse collapse show'
+        : 'accordion-collapse collapse hide';
   }
 
   onTabSelect(tabName: any) {
